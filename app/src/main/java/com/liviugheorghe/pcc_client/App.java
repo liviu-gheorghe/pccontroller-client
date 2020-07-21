@@ -10,13 +10,10 @@ public class App extends Application {
 
 
     public static final String CHANNEL_ID = "backgroundServiceChannel";
-    public static final String ERROR_LOG_TAG = "ERROR";
     public static final String EXTRA_TARGET_IP_ADDRESS = "TARGET_IP_ADDRESS";
-    public static final String EXTRA_TARGET_HOSTNAME = "TARGET_HOSTNAME";
     public static final String EXTRA_FILE_URI = "EXTRA_FILE_URI";
     public final static int SERVER_PORT = 8560;
     public final static int FILE_SERVER_PORT = 8561;
-    public static boolean PERMISSION_GRANTED = true;
     public static boolean CONNECTION_ALIVE = false;
     public static String CONNECTED_DEVICE_HOSTNAME = "";
     public static String CONNECTED_DEVICE_IP_ADDRESS = null;
@@ -30,7 +27,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        createNotificationChannel("PcR Controller Notification Channel");
+        createNotificationChannel("PC Controller Controller Notification Channel");
         App.context = getApplicationContext();
     }
 

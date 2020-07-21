@@ -10,23 +10,22 @@ import android.content.ServiceConnection;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.StrictMode;
-import android.util.Log;
-
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
 
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.ui.LauncherActivity;
 import com.pccontroller.R;
 
-public class Client extends Service {
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 
+public class Client extends Service {
+    
     private Connection connection;
     private String targetIpAddress;
     private ClientBinder clientBinder = new ClientBinder();
-
-    public Connection getConnection() throws NullPointerException{
-        if(connection == null) throw new NullPointerException();
+    
+    public Connection getConnection() throws NullPointerException {
+        if (connection == null) throw new NullPointerException();
         return connection;
     }
 
@@ -42,19 +41,16 @@ public class Client extends Service {
         super.onCreate();
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        Log.d("STUFF", "Service client has been created");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d("STUFF", "Service client has been destroyed");
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        Log.d("STUFF", "Client has been bound again");
         return clientBinder;
     }
 

@@ -6,11 +6,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.backend.Client;
 import com.pccontroller.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 
 public class WaitForPermissionActivity extends AppCompatActivity {

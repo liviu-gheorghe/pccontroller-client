@@ -10,11 +10,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.IBinder;
 import android.provider.OpenableColumns;
-import android.util.Log;
-
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
 
 import com.liviugheorghe.pcc_client.App;
 import com.pccontroller.R;
@@ -23,6 +18,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
 import java.net.Socket;
+
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 
 import static com.liviugheorghe.pcc_client.App.EXTRA_FILE_URI;
 
@@ -46,7 +44,6 @@ public class FileConnection extends Service {
 
     private void createSocket(String host,int port) throws Exception {
         try {
-            Log.d(TAG, String.format("Creating socket, host = %s , port = %s",App.CONNECTED_DEVICE_HOSTNAME,App.FILE_SERVER_PORT));
             fileSocket = new Socket(host, port);
             fileSocketOutputStream = getSocketOutputStream(fileSocket);
         } catch (Exception e) {
@@ -82,7 +79,6 @@ public class FileConnection extends Service {
                         int fileSize = 0;
                         try {
                             fileSize = Integer.parseInt(fileInformation.size);
-                            Log.d(TAG, "File size is : "+ fileSize);
                         }
                         catch(NumberFormatException e) {
                             e.printStackTrace();
@@ -96,9 +92,7 @@ public class FileConnection extends Service {
                                 if(fileSize != 0) {
 
 
-                                    Log.d(TAG, "Bytes read so far : "+ totalNumberOfBytes);
                                     int progress = (int) (((float)totalNumberOfBytes/fileSize)*100);
-                                    Log.d(TAG, "Progress is : " + progress);
                                     notificationBuilder.setProgress(100,progress,false);
                                     notificationManager.notify(3,notificationBuilder.build());
                                 }
@@ -106,7 +100,6 @@ public class FileConnection extends Service {
                             }
                         }
                         dataInputStream.close();
-                        Log.d(TAG, "File transfer successful , bytes written : " + totalNumberOfBytes);
                         stopSelf();
                     }
                     catch (Exception e) {
@@ -126,11 +119,9 @@ public class FileConnection extends Service {
             stopSelf();
         }
 
-        Log.d("STUFF","Received uri is "+ intent.getStringExtra(EXTRA_FILE_URI));
         try {
             Uri uri = Uri.parse(intent.getStringExtra(EXTRA_FILE_URI));
             fileInformation = getFileInformation(uri);
-            Log.d("STUFF", "Is input stream null ? "+ (fileInformation.inputStream == null));
             onConnectionEstablished();
         }
         catch(Exception e) {
@@ -156,31 +147,18 @@ public class FileConnection extends Service {
             e.printStackTrace();
         }
 
-        Log.d(TAG, "Service Destroyed");
     }
 
     private FileInformation getFileInformation(Uri uri) {
         FileInformation fileInformation = new FileInformation();
         Cursor cursor = getContentResolver().query(uri, null, null, null, null, null);
         try {
-            // moveToFirst() returns false if the cursor has 0 rows. Very handy for
-            // "if there's anything to look at, look at it" conditionals.
             if (cursor != null && cursor.moveToFirst()) {
-                // Note it's called "Display Name". This is
-                // provider-specific, and might not necessarily be the file name.
                 String displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                 fileInformation.name = displayName;
                 int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
-                // If the size is unknown, the value stored is null. But because an
-                // int can't be null, the behavior is implementation-specific,
-                // and unpredictable. So as
-                // a rule, check if it's null before assigning to an int. This will
-                // happen often: The storage API allows for remote files, whose
-                // size might not be locally known.
-                String size = null;
+                String size;
                 if (!cursor.isNull(sizeIndex)) {
-                    // Technically the column stores an int, but cursor.getString()
-                    // will do the conversion automatically.
                     size = cursor.getString(sizeIndex);
                 } else {
                     size = "Unknown";

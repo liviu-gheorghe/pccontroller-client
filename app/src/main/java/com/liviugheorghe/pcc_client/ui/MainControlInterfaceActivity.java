@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -100,7 +99,6 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
             if (data != null) {
                 uri = data.getData();
                 if(uri == null) {
-                    Log.d(TAG, "onActivityResult: URI IS NULL");
                     return;
                 }
                 Intent serviceIntent = new Intent(this, FileConnection.class);
@@ -109,7 +107,6 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
                     startService(serviceIntent);
                 }
                 catch(Exception e) {
-                    Log.e(TAG, "Error starting the service");
                 }
             }
         }
