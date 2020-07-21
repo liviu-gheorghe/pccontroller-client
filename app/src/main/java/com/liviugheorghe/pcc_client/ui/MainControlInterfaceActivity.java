@@ -15,18 +15,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
-
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.backend.Client;
 import com.liviugheorghe.pcc_client.backend.DispatchedActionsCodes;
 import com.liviugheorghe.pcc_client.backend.FileConnection;
 import com.pccontroller.R;
 
-
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import static com.liviugheorghe.pcc_client.App.EXTRA_FILE_URI;
 
@@ -35,6 +32,7 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
     private static final int PICK_FILE = 2;
     private Client client;
     private final String TAG = this.getClass().getSimpleName();
+    private ServiceConnection serviceConnection;
 
     private final BroadcastReceiver serviceBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -63,20 +61,19 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_control_interface);
         registerReceiver(serviceBroadcastReceiver, new IntentFilter("LEAVE_CONTROL_INTERFACE_ACTIVITY"));
-        //String hostname = getIntent().getStringExtra(App.TARGET_HOSTNAME);
         TextView hostnameTextView = findViewById(R.id.hostname);
         hostnameTextView.setText(App.CONNECTED_DEVICE_HOSTNAME);
-
-        ServiceConnection serviceConnection = new ServiceConnection() {
+    
+        serviceConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder service) {
                 Client.ClientBinder binder = (Client.ClientBinder) service;
                 client = binder.getClient();
             }
-
+        
             @Override
             public void onServiceDisconnected(ComponentName componentName) {
-
+            
             }
         };
         Intent serviceIntent = new Intent(this, Client.class);
@@ -92,6 +89,7 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(serviceBroadcastReceiver);
+        unbindService(serviceConnection);
     }
 
     @Override
@@ -105,7 +103,6 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
                     Log.d(TAG, "onActivityResult: URI IS NULL");
                     return;
                 }
-                //client.getConnection().dispatchAction(DispatchedActionsCodes.ACTION_SEND_FILE_TRANSMISSION_INTENT,"");
                 Intent serviceIntent = new Intent(this, FileConnection.class);
                 serviceIntent.putExtra(EXTRA_FILE_URI,uri.toString());
                 try {
@@ -122,7 +119,6 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
         try {
             client.getConnection().dispatchAction(DispatchedActionsCodes.ACTION_EXECUTE_COMMAND, getViewId(v));
         } catch (Exception e) {
-            Log.d( "STUFF","NPE? on line 172 in MainControlInterfaceActivity.java");
             e.printStackTrace();
         }
     }

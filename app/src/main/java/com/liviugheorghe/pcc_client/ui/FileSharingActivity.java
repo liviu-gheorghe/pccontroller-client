@@ -1,7 +1,5 @@
 package com.liviugheorghe.pcc_client.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +14,8 @@ import android.widget.Toast;
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.backend.FileConnection;
 import com.pccontroller.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import static com.liviugheorghe.pcc_client.App.EXTRA_FILE_URI;
 
@@ -70,8 +70,6 @@ public class FileSharingActivity extends AppCompatActivity {
             finish();
         });
     }
-
-
 
     @Override
     protected void onResume() {
