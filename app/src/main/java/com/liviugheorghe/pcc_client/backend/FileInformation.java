@@ -7,7 +7,8 @@ public class FileInformation implements Serializable {
 
     public String name;
     public String size;
-    public InputStream inputStream;
+	public String type = "";
+	public InputStream inputStream;
 
     public FileInformation() {
 

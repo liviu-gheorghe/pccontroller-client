@@ -8,17 +8,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.backend.Client;
@@ -26,7 +20,8 @@ import com.liviugheorghe.pcc_client.backend.DispatchedActionsCodes;
 import com.liviugheorghe.pcc_client.backend.FileConnection;
 import com.pccontroller.R;
 
-
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import static com.liviugheorghe.pcc_client.App.EXTRA_FILE_URI;
 
@@ -105,7 +100,6 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
                     Log.d(TAG, "onActivityResult: URI IS NULL");
                     return;
                 }
-                //client.getConnection().dispatchAction(DispatchedActionsCodes.ACTION_SEND_FILE_TRANSMISSION_INTENT,"");
                 Intent serviceIntent = new Intent(this, FileConnection.class);
                 serviceIntent.putExtra(EXTRA_FILE_URI,uri.toString());
                 try {
@@ -122,7 +116,6 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
         try {
             client.getConnection().dispatchAction(DispatchedActionsCodes.ACTION_EXECUTE_COMMAND, getViewId(v));
         } catch (Exception e) {
-            Log.d( "STUFF","NPE? on line 172 in MainControlInterfaceActivity.java");
             e.printStackTrace();
         }
     }
@@ -135,7 +128,6 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
         startActivity(new Intent(this, TouchpadActivity.class));
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void clickOpenFile(View v) {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.setType("*/*");

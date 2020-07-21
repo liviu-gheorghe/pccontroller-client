@@ -9,9 +9,6 @@ import android.os.Build;
 import android.os.IBinder;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
-
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.ui.LauncherActivity;
 import com.pccontroller.R;
@@ -21,18 +18,18 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+
 
 public class Connection extends Service {
 
     private String targetIpAddress;
-    private boolean isConnectionEstablished = false;
     private Socket socket;
     private DataInputStream inputStream;
     private DataOutputStream outputStream;
     private Connection.ActionHandler actionHandler;
     private Connection.ActionDispatcher actionDispatcher;
-
-
 
     public class ConnectionBinder extends Binder {
         public Connection getConnection() {
@@ -80,22 +77,11 @@ public class Connection extends Service {
     }
 
     private void onConnectionAccepted() {
-        Notification notification = createServiceNotification("Connected to " + targetIpAddress);
+        Notification notification = createServiceNotification("Connected to " + targetIpAddress, App.BACKGROUND_SERVICE_CHANNEL_ID);
         startForeground(2,notification);
         App.CONNECTION_ALIVE = true;
         App.CONNECTED_DEVICE_IP_ADDRESS = targetIpAddress;
         sendBroadcast(new Intent("LEAVE_WAIT_FOR_PERMISSION_ACTIVITY"));
-    }
-
-    public static class DeviceNotReachableException extends Exception {
-
-        DeviceNotReachableException (String message) {
-            super(message);
-        }
-
-        DeviceNotReachableException () {
-            super("The device is not reachable");
-        }
     }
 
     private void createSocket(String host,int port) throws IOException {
@@ -189,14 +175,25 @@ public class Connection extends Service {
             }
         }
     }
-
-    private Notification createServiceNotification(String text) {
+    
+    private Notification createServiceNotification(String text, String channelID) {
         Intent notificationIntent = new Intent(this, LauncherActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-        return new NotificationCompat.Builder(this, App.CHANNEL_ID)
+        return new NotificationCompat.Builder(this, channelID)
                 .setContentText(text)
                 .setSmallIcon(R.drawable.ic_android_black_24dp)
                 .setContentIntent(pendingIntent)
                 .build();
+    }
+    
+    public static class DeviceNotReachableException extends Exception {
+        
+        DeviceNotReachableException(String message) {
+            super(message);
+        }
+        
+        DeviceNotReachableException() {
+            super("The device is not reachable");
+        }
     }
 }
