@@ -38,4 +38,10 @@ public class WaitForPermissionActivity extends AppCompatActivity {
         ).putExtra(App.EXTRA_TARGET_IP_ADDRESS, getIntent().getStringExtra(App.EXTRA_TARGET_IP_ADDRESS));
         startService(serviceIntent);
     }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(serviceBroadcastReceiver);
+    }
 }
