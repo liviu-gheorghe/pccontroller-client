@@ -1,8 +1,8 @@
 package com.liviugheorghe.pcc_client;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
 
@@ -33,7 +33,7 @@ public class App extends Application {
         createNotificationChannel(
                 FILE_SHARING_SERVICE_CHANNEL_ID,
                 "PC Controller File Sharing Service Notification Channel",
-                NotificationManagerCompat.IMPORTANCE_HIGH
+				NotificationManagerCompat.IMPORTANCE_MAX
         );
         App.context = getApplicationContext();
     }
@@ -47,12 +47,12 @@ public class App extends Application {
     private void createNotificationChannel(String channelID, String description, int... args) {
         int importance = (args.length > 0) ? args[0] : NotificationManagerCompat.IMPORTANCE_DEFAULT;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel(
-                    channelID,
-                    description,
-                    NotificationManager.IMPORTANCE_HIGH
-            );
-            NotificationManagerCompat manager = getSystemService(NotificationManagerCompat.class);
+			@SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(
+					channelID,
+					description,
+					importance
+			);
+			NotificationManagerCompat manager = getSystemService(NotificationManagerCompat.class);
             try {
                 manager.createNotificationChannel(notificationChannel);
             } catch (NullPointerException ignored) {
