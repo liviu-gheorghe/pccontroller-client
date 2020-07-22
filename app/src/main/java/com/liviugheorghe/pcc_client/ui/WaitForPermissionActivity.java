@@ -5,13 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.backend.Client;
 import com.pccontroller.R;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 
 public class WaitForPermissionActivity extends AppCompatActivity {
 	
@@ -38,4 +35,9 @@ public class WaitForPermissionActivity extends AppCompatActivity {
 		).putExtra(App.EXTRA_TARGET_IP_ADDRESS, getIntent().getStringExtra(App.EXTRA_TARGET_IP_ADDRESS));
 		startService(serviceIntent);
 	}
+      @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(serviceBroadcastReceiver);
+    }
 }
