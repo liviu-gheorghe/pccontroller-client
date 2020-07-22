@@ -1,6 +1,5 @@
 package com.liviugheorghe.pcc_client.backend;
 
-
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -19,13 +18,12 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 public class Client extends Service {
-    
+
     private Connection connection;
-    private String targetIpAddress;
     private ClientBinder clientBinder = new ClientBinder();
-    
-    public Connection getConnection() throws NullPointerException {
-        if (connection == null) throw new NullPointerException();
+
+    public Connection getConnection() throws NullPointerException{
+        if(connection == null) throw new NullPointerException();
         return connection;
     }
 
@@ -56,18 +54,18 @@ public class Client extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-        targetIpAddress = intent.getStringExtra(App.EXTRA_TARGET_IP_ADDRESS);
-                    Intent serviceIntent = new Intent(this,Connection.class);
-                    serviceIntent.putExtra(App.EXTRA_TARGET_IP_ADDRESS,targetIpAddress);
-                    startService(serviceIntent);
-
-                    ServiceConnection serviceConnection = new ServiceConnection() {
-                        @Override
-                        public void onServiceConnected(ComponentName name, IBinder service) {
-                            Connection.ConnectionBinder binder = (Connection.ConnectionBinder) service;
-                            try {
-                                connection = binder.getConnection();
+    
+        String targetIpAddress = intent.getStringExtra(App.EXTRA_TARGET_IP_ADDRESS);
+        Intent serviceIntent = new Intent(this, Connection.class);
+        serviceIntent.putExtra(App.EXTRA_TARGET_IP_ADDRESS, targetIpAddress);
+        startService(serviceIntent);
+    
+        ServiceConnection serviceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                Connection.ConnectionBinder binder = (Connection.ConnectionBinder) service;
+                try {
+                    connection = binder.getConnection();
                             }
                             catch(Exception e) {
                                 e.printStackTrace();
@@ -79,12 +77,12 @@ public class Client extends Service {
                         }
                     };
                     bindService(serviceIntent,serviceConnection,0);
-
-                        Notification notification = createServiceNotification("PC Controller is active");
+    
+        Notification notification = createServiceNotification("PC Controller is active", App.BACKGROUND_SERVICE_CHANNEL_ID);
                         startForeground(1, notification);
         return START_NOT_STICKY;
     }
-
+    
     public void closeConnection() {
         try {
             connection.stopSelf();
@@ -92,10 +90,11 @@ public class Client extends Service {
             e.printStackTrace();
         }
     }
-    private Notification createServiceNotification(String text) {
+    
+    private Notification createServiceNotification(String text, String channelID) {
         Intent notificationIntent = new Intent(this, LauncherActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-        return new NotificationCompat.Builder(this, App.CHANNEL_ID)
+        return new NotificationCompat.Builder(this, channelID)
                 .setContentText(text)
                 .setSmallIcon(R.drawable.ic_android_black_24dp)
                 .setContentIntent(pendingIntent)

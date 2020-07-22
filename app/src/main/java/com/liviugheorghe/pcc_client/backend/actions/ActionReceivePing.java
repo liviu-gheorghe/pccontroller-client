@@ -6,24 +6,23 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
-import androidx.core.app.NotificationCompat;
-
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.backend.Action;
-import com.liviugheorghe.pcc_client.backend.Client;
 import com.liviugheorghe.pcc_client.backend.ReceivedActionsCodes;
 import com.liviugheorghe.pcc_client.ui.LauncherActivity;
 import com.pccontroller.R;
 
+import androidx.core.app.NotificationCompat;
+
 public class ActionReceivePing implements Action {
-
-    private String content;
-
-    public ActionReceivePing(String content) {
-        this.content = content;
-    }
-
-    @Override
+	
+	private String content;
+	
+	public ActionReceivePing(String content) {
+		this.content = content;
+	}
+	
+	@Override
     public void execute() {
         new Thread(this::createPingNotification).start();
     }
@@ -32,15 +31,15 @@ public class ActionReceivePing implements Action {
         Intent notificationIntent = new Intent(
                 App.getAppContext(), LauncherActivity.class
         );
-        PendingIntent pendingIntent = PendingIntent.getActivity(
-                App.getAppContext(), 0, notificationIntent, 0
-        );
-        Notification notification = new NotificationCompat.Builder(App.getAppContext(), App.CHANNEL_ID)
-                .setContentTitle("")
-                .setContentText("Ping!")
-                .setSmallIcon(R.drawable.ic_android_black_24dp)
-                .setContentIntent(pendingIntent)
-                .build();
+		PendingIntent pendingIntent = PendingIntent.getActivity(
+				App.getAppContext(), 0, notificationIntent, 0
+		);
+		Notification notification = new NotificationCompat.Builder(App.getAppContext(), App.BACKGROUND_SERVICE_CHANNEL_ID)
+				.setContentTitle("")
+				.setContentText("Ping!")
+				.setSmallIcon(R.drawable.ic_android_black_24dp)
+				.setContentIntent(pendingIntent)
+				.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL;
 
 

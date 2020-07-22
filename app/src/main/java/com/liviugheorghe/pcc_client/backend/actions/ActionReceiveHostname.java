@@ -18,14 +18,7 @@ public class ActionReceiveHostname implements Action {
     public void execute() {
 
         new Thread(
-                () -> {
-                    App.CONNECTED_DEVICE_HOSTNAME = hostname;
-                    try {
-                        //TODO
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
-                    }
-                }
+                () -> App.CONNECTED_DEVICE_HOSTNAME = hostname
         ).start();
     }
 
