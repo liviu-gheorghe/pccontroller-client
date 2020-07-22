@@ -33,7 +33,7 @@ public class App extends Application {
         createNotificationChannel(
                 FILE_SHARING_SERVICE_CHANNEL_ID,
                 "PC Controller File Sharing Service Notification Channel",
-				NotificationManagerCompat.IMPORTANCE_MAX
+                NotificationManagerCompat.IMPORTANCE_HIGH
         );
         App.context = getApplicationContext();
     }

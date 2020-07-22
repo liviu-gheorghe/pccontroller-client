@@ -1,7 +1,6 @@
 package com.liviugheorghe.pcc_client.ui;
 
 import android.content.Context;
-import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;

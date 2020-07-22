@@ -1,14 +1,11 @@
 package com.liviugheorghe.pcc_client.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +13,8 @@ import android.widget.Toast;
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.backend.FileConnection;
 import com.pccontroller.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import static com.liviugheorghe.pcc_client.App.EXTRA_FILE_URI;
 
@@ -60,7 +59,6 @@ public class FileSharingActivity extends AppCompatActivity {
                     startService(serviceIntent);
                 }
                 catch(Exception e) {
-                    Log.e(TAG, "Error starting the service");
                 }
             }
             else {
@@ -70,8 +68,6 @@ public class FileSharingActivity extends AppCompatActivity {
             finish();
         });
     }
-
-
 
     @Override
     protected void onResume() {

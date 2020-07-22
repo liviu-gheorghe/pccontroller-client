@@ -7,17 +7,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.util.Log;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.google.zxing.Result;
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.util.IpAddressValidator;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static android.Manifest.permission.CAMERA;
@@ -63,7 +61,6 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
         }
 
         if (App.CONNECTION_ALIVE) {
-            Log.d("STUFF", "A connection is already established");
             return;
         }
 

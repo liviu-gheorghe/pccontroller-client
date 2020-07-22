@@ -10,7 +10,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.IBinder;
 import android.provider.OpenableColumns;
-import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import com.liviugheorghe.pcc_client.App;
@@ -78,7 +77,6 @@ public class FileConnection extends Service {
 						String fileName = fileInformation.name;
 						try {
 							fileSize = Integer.parseInt(fileInformation.size);
-							Log.d(TAG, "File size is : " + fileSize);
 						} catch (NumberFormatException e) {
 							e.printStackTrace();
 							notificationBuilder.setProgress(100, 0, true);
@@ -104,7 +102,6 @@ public class FileConnection extends Service {
 							}
 						}
 						dataInputStream.close();
-						Log.d(TAG, "File transfer successful , bytes written : " + totalNumberOfBytes);
 						stopSelf();
 					} catch (Exception e) {
 						e.printStackTrace();
