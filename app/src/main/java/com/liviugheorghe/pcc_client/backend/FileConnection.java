@@ -1,8 +1,6 @@
 package com.liviugheorghe.pcc_client.backend;
 
-import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -37,6 +35,7 @@ public class FileConnection extends Service {
 	private FileInformation fileInformation;
 	private NotificationManager notificationManager;
 	private NotificationCompat.Builder notificationBuilder;
+	private static final int NOTIFICATION_ID = 4;
 	
 	@Override
 	public void onCreate() {
@@ -71,7 +70,7 @@ public class FileConnection extends Service {
 								.setSmallIcon(R.drawable.ic_file_upload_black_24dp)
 								.setProgress(100, 0, false);
 						
-						startForeground(3, notificationBuilder.build());
+						startForeground(NOTIFICATION_ID, notificationBuilder.build());
 						DataInputStream dataInputStream = new DataInputStream(fileInformation.inputStream);
 						int fileSize = 0;
 						String fileName = fileInformation.name;
@@ -96,7 +95,7 @@ public class FileConnection extends Service {
 								if (fileSize != 0) {
 									int progress = (int) (((float) totalNumberOfBytes / fileSize) * 100);
 									notificationBuilder.setProgress(100, progress, false);
-									notificationManager.notify(3, notificationBuilder.build());
+									notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
 								}
 								fileSocketOutputStream.write(buffer, 0, numberOfBytes);
 							}
@@ -173,15 +172,5 @@ public class FileConnection extends Service {
 			cursor.close();
 		}
 		return fileInformation;
-	}
-	
-	private Notification createServiceNotification(String text, String channelID) {
-		Intent notificationIntent = new Intent();
-		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-		return new NotificationCompat.Builder(this, channelID)
-				.setContentText(text)
-				.setSmallIcon(R.drawable.ic_file_upload_black_24dp)
-				.setContentIntent(pendingIntent)
-				.build();
 	}
 }
