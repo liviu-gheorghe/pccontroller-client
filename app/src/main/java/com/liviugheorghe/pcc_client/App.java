@@ -1,5 +1,6 @@
 package com.liviugheorghe.pcc_client;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -47,10 +48,10 @@ public class App extends Application {
     private void createNotificationChannel(String channelID, String description, int... args) {
         int importance = (args.length > 0) ? args[0] : NotificationManagerCompat.IMPORTANCE_DEFAULT;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel(
+            @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(
                     channelID,
                     description,
-                    NotificationManager.IMPORTANCE_HIGH
+                    importance
             );
             NotificationManagerCompat manager = getSystemService(NotificationManagerCompat.class);
             try {
