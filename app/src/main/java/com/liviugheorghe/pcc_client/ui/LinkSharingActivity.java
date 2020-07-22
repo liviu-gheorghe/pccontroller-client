@@ -11,8 +11,6 @@ import android.os.IBinder;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.backend.Client;
 import com.liviugheorghe.pcc_client.backend.DispatchedActionsCodes;
@@ -20,6 +18,8 @@ import com.pccontroller.R;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class LinkSharingActivity extends AppCompatActivity {
 
@@ -31,12 +31,13 @@ public class LinkSharingActivity extends AppCompatActivity {
     private final BroadcastReceiver serviceBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-
-            if(intent.getAction().equals("LEAVE_CONTROL_INTERFACE_ACTIVITY")) {
+            
+            if (intent.getAction().equals("LEAVE_CONTROL_INTERFACE_ACTIVITY")) {
                 onResume();
             }
         }
     };
+    private ServiceConnection serviceConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,17 +56,18 @@ public class LinkSharingActivity extends AppCompatActivity {
             if (matcher.find()) {
                 link = matcher.group(0);
             }
-
-            ServiceConnection serviceConnection = new ServiceConnection() {
-                @Override
-                public void onServiceConnected(ComponentName componentName, IBinder service) {
-                    Client.ClientBinder binder = (Client.ClientBinder) service;
-                    client = binder.getClient();
-                }
-                @Override
-                public void onServiceDisconnected(ComponentName componentName) {
-                }
-            };
+    
+        serviceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName componentName, IBinder service) {
+                Client.ClientBinder binder = (Client.ClientBinder) service;
+                client = binder.getClient();
+            }
+        
+            @Override
+            public void onServiceDisconnected(ComponentName componentName) {
+            }
+        };
             Intent serviceIntent = new Intent(LinkSharingActivity.this, Client.class);
             bindService(serviceIntent, serviceConnection, 0);
 
@@ -103,5 +105,6 @@ public class LinkSharingActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(serviceBroadcastReceiver);
+        unbindService(serviceConnection);
     }
 }
