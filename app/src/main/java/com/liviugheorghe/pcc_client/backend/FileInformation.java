@@ -13,11 +13,4 @@ public class FileInformation implements Serializable {
     public FileInformation() {
 
     }
-    /**
-    FileInformation(String name, String size,InputStream inputStream) {
-        this.name = name;
-        this.size = size;
-        this.inputStream = inputStream;
-    }
-     **/
 }

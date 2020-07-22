@@ -2,18 +2,14 @@ package com.liviugheorghe.pcc_client.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.liviugheorghe.pcc_client.App;
-import com.liviugheorghe.pcc_client.ui.QrCodeScannerActivity;
-import com.liviugheorghe.pcc_client.ui.WaitForPermissionActivity;
 import com.liviugheorghe.pcc_client.util.IpAddressValidator;
 import com.pccontroller.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.connect_button).setOnClickListener(view -> {
 
             if (App.CONNECTION_ALIVE) {
-                Log.d("STUFF", "A connection is already established");
                 Toast.makeText(MainActivity.this, "A connection is already established", Toast.LENGTH_SHORT).show();
                 return;
             }

@@ -7,7 +7,6 @@ import android.media.AudioManager;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Handler;
-import android.util.Log;
 
 import com.liviugheorghe.pcc_client.App;
 
@@ -28,15 +27,8 @@ public class SettingsContentObserver extends ContentObserver {
     @Override
     public void onChange(boolean selfChange) {
         super.onChange(selfChange);
-        Log.d("STUFF", "System settings changed");
         int music_stream_volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
         boolean headphones_plugged = areHeadphonesConnected();
-        /**
-         ActionDispatcher.dispatchAction(
-         App.ACTION_SHARE_MUSIC_STREAM_LEVEL,
-         String.format("%s : %d %s","Volume",music_stream_volume,((headphones_plugged==true)?"(headphones plugged in)":""))
-         );
-         **/
     }
 
 
