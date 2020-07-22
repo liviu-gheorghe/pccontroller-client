@@ -38,15 +38,6 @@
                     android:onClick="clickActionView"
                     app:srcCompat="@drawable/ic_indeterminate_check_box_black_24dp" />
 
-                <ImageButton
-                    android:id="@+id/br_up"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#000000"
-                    android:contentDescription="@string/todo"
-                    android:onClick="clickActionView"
-                    app:srcCompat="@drawable/ic_add_box_black_24dp" />
 
                 <TextView
                     android:id="@+id/textView3"
@@ -60,6 +51,17 @@
                     android:text="@string/brightness_bar"
                     android:textColor="@color/colorWhite"
                     android:textSize="24sp" />
+
+                <ImageButton
+                    android:id="@+id/br_up"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#000000"
+                    android:contentDescription="@string/todo"
+                    android:onClick="clickActionView"
+                    app:srcCompat="@drawable/ic_add_box_black_24dp" />
+
 
 
             </TableRow>
@@ -80,16 +82,6 @@
                     android:onClick="clickActionView"
                     app:srcCompat="@drawable/ic_indeterminate_check_box_black_24dp" />
 
-                <ImageButton
-                    android:id="@+id/vol_up"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="#000000"
-                    android:contentDescription="@string/todo"
-                    android:onClick="clickActionView"
-                    app:srcCompat="@drawable/ic_add_box_black_24dp" />
-
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
@@ -102,6 +94,18 @@
                     android:text="@string/volume_bar"
                     android:textColor="@color/colorWhite"
                     android:textSize="24sp" />
+
+                <ImageButton
+                    android:id="@+id/vol_up"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#000000"
+                    android:contentDescription="@string/todo"
+                    android:onClick="clickActionView"
+                    app:srcCompat="@drawable/ic_add_box_black_24dp" />
+
+
             </TableRow>
 
             <TableRow
