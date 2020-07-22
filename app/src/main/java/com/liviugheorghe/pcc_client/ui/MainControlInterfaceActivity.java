@@ -30,6 +30,7 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
     private static final int PICK_FILE = 2;
     private Client client;
     private final String TAG = this.getClass().getSimpleName();
+    private ServiceConnection serviceConnection;
 
     private final BroadcastReceiver serviceBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -61,17 +62,17 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
         //String hostname = getIntent().getStringExtra(App.TARGET_HOSTNAME);
         TextView hostnameTextView = findViewById(R.id.hostname);
         hostnameTextView.setText(App.CONNECTED_DEVICE_HOSTNAME);
-
-        ServiceConnection serviceConnection = new ServiceConnection() {
+    
+        serviceConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder service) {
                 Client.ClientBinder binder = (Client.ClientBinder) service;
                 client = binder.getClient();
             }
-
+        
             @Override
             public void onServiceDisconnected(ComponentName componentName) {
-
+            
             }
         };
         Intent serviceIntent = new Intent(this, Client.class);
@@ -87,6 +88,7 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(serviceBroadcastReceiver);
+        unbindService(serviceConnection);
     }
 
     @Override
