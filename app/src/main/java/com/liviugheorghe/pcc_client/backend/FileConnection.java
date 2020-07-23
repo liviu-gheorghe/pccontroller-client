@@ -17,6 +17,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
 import java.net.Socket;
+import java.util.Locale;
 import java.util.UUID;
 
 import androidx.annotation.Nullable;
@@ -94,7 +95,8 @@ public class FileConnection extends Service {
 								totalNumberOfBytes += numberOfBytes;
 								if (fileSize != 0) {
 									int progress = (int) (((float) totalNumberOfBytes / fileSize) * 100);
-									notificationBuilder.setProgress(100, progress, false);
+									notificationBuilder.setProgress(100, progress, false)
+											.setContentText(String.format(Locale.getDefault(), "Upload in progress , %d %% loaded", progress));
 									notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
 								}
 								fileSocketOutputStream.write(buffer, 0, numberOfBytes);
