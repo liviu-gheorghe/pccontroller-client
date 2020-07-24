@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.textfield.TextInputEditText;
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.util.IpAddressValidator;
 import com.pccontroller.R;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
             TextInputEditText computerIpTextInput = findViewById(R.id.computer_ip_text_input);
             String targetIpAddress = computerIpTextInput.getText().toString();
             targetIpAddress = targetIpAddress.trim();
-            if(!IpAddressValidator.isIpAddress(targetIpAddress))
-                Toast.makeText(this,"Invalid Ip Address" , Toast.LENGTH_SHORT).show();
+            if (!IpAddressValidator.isLocalIpAddress(targetIpAddress))
+                Toast.makeText(this, "Invalid Ip Address", Toast.LENGTH_SHORT).show();
             else {
                 Intent intent = new Intent(
                         MainActivity.this,

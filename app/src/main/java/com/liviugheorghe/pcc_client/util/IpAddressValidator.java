@@ -10,7 +10,11 @@ public class IpAddressValidator {
     private static final String LOCAL_IP_REGEXP = "(^127\\.0\\.0\\.1)|(^10\\.)|(^172\\.1[6-9]\\.)|(^172\\.2[0-9]\\.)|(^172\\.3[0-1]\\.)|(^192\\.168\\.)";
     private static final Pattern LOCAL_IP_PATTERN = Pattern.compile(LOCAL_IP_REGEXP);
 
-    public static boolean isIpAddress(String input) {
+    private static boolean isIpAddress(String input) {
         return IP_PATTERN.matcher(input).matches();
+    }
+
+    public static boolean isLocalIpAddress(String input) {
+        return isIpAddress(input) && LOCAL_IP_PATTERN.matcher(input).matches();
     }
 }
