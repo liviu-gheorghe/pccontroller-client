@@ -8,14 +8,15 @@ import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 
-import com.google.zxing.Result;
-import com.liviugheorghe.pcc_client.App;
-import com.liviugheorghe.pcc_client.util.IpAddressValidator;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.google.zxing.Result;
+import com.liviugheorghe.pcc_client.App;
+import com.liviugheorghe.pcc_client.util.IpAddressValidator;
+
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static android.Manifest.permission.CAMERA;
@@ -42,10 +43,7 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
 
         vibrateDevice(250);
         String scanResult = result.getText();
-        String targetIpAddress = scanResult.split(",")[0];
-        String targetHostName = scanResult.split(",")[1];
-
-        if(!IpAddressValidator.isIpAddress(targetIpAddress)) {
+        if (!isValidQrCode(scanResult)) {
             displayDialogBox(
                     "Invalid QR code",
                     "Scan again",
@@ -60,14 +58,26 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
             return;
         }
 
+        String targetIpAddress = scanResult.split(",")[0];
+        String targetHostName = scanResult.split(",")[1];
+
         if (App.CONNECTION_ALIVE) {
             return;
         }
 
-        Intent waitForPermissionActivityIntent = new Intent(this,WaitForPermissionActivity.class);
-        waitForPermissionActivityIntent.putExtra(App.EXTRA_TARGET_IP_ADDRESS,targetIpAddress);
+        Intent waitForPermissionActivityIntent = new Intent(this, WaitForPermissionActivity.class);
+        waitForPermissionActivityIntent.putExtra(App.EXTRA_TARGET_IP_ADDRESS, targetIpAddress);
         startActivity(waitForPermissionActivityIntent);
         finish();
+    }
+
+    private boolean isValidQrCode(String text) {
+        if (text == null) return false;
+        String[] params = text.split(",");
+        if (params.length != 2) return false;
+        if (!IpAddressValidator.isLocalIpAddress(params[0])) return false;
+        if (params[1].length() == 0) return false;
+        return true;
     }
 
     private boolean checkPermission() {
