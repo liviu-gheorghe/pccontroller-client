@@ -1,5 +1,6 @@
 package com.liviugheorghe.pcc_client.ui;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -52,6 +53,7 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
                         onResume();
                     },
                     (dialog, which) -> {
+                        setResult(Activity.RESULT_CANCELED, null);
                         finish();
                     }
             );
@@ -61,13 +63,10 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
         String targetIpAddress = scanResult.split(",")[0];
         String targetHostName = scanResult.split(",")[1];
 
-        if (App.CONNECTION_ALIVE) {
-            return;
-        }
-
-        Intent waitForPermissionActivityIntent = new Intent(this, WaitForPermissionActivity.class);
-        waitForPermissionActivityIntent.putExtra(App.EXTRA_TARGET_IP_ADDRESS, targetIpAddress);
-        startActivity(waitForPermissionActivityIntent);
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(App.EXTRA_TARGET_IP_ADDRESS, targetIpAddress);
+        resultIntent.putExtra(App.EXTRA_TARGET_HOSTNAME, targetHostName);
+        setResult(Activity.RESULT_OK, resultIntent);
         finish();
     }
 
@@ -76,8 +75,7 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
         String[] params = text.split(",");
         if (params.length != 2) return false;
         if (!IpAddressValidator.isLocalIpAddress(params[0])) return false;
-        if (params[1].length() == 0) return false;
-        return true;
+        return params[1].length() != 0;
     }
 
     private boolean checkPermission() {
@@ -91,19 +89,10 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
     public void onRequestPermissionsResult(int requestCode, String[] permission, int[] grantResults) {
         if (requestCode == REQUEST_CAMERA) {
             if (grantResults.length > 0) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (shouldShowRequestPermissionRationale(CAMERA)) {
-                        displayAlertMessage("You need to allow permission", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                    requestPermissions(new String[]{CAMERA},
-                                            REQUEST_CAMERA);
-                                }
-                            }
-                        });
-                    }
-                }
+                if (grantResults[0] == PackageManager.PERMISSION_DENIED)
+                    displayAlertMessage("You did not allow Camera Permission", (dialog, which) -> {
+                        finish();
+                    });
             }
         }
     }
@@ -119,7 +108,7 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
                 }
                 scannerView.setResultHandler(this);
                 scannerView.startCamera();
-            } else requestPermission();
+            }
         }
     }
 
@@ -133,7 +122,6 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
         new AlertDialog.Builder(this)
                 .setMessage(message)
                 .setPositiveButton("OK", listener)
-                .setNegativeButton("Cancel", null)
                 .create()
                 .show();
     }
