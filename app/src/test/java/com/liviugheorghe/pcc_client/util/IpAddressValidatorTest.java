@@ -27,7 +27,13 @@ public class IpAddressValidatorTest {
     @Test
     @DisplayName("When public ip is passed should return false")
     public void withPublicIp_shouldReturnFalse() {
-        assertFalse(IpAddressValidator.isLocalIpAddress("87.55.123.22"));
+
+        String[] publicIPs = new String[]{
+                "100.123.12.34",
+                "85.99.127.34"
+        };
+        for (String address : publicIPs)
+            assertFalse(IpAddressValidator.isLocalIpAddress(address));
     }
 
     @Test
@@ -38,21 +44,20 @@ public class IpAddressValidatorTest {
 
 
     @Test
-    @DisplayName("When class A local IP is passed should return false")
+    @DisplayName("When class A local IP is passed should return true")
     public void withClassALocalIp_shouldReturnTrue() {
         assertTrue(IpAddressValidator.isLocalIpAddress("10.12.14.234"));
     }
 
     @Test
-    @DisplayName("When class B local IP is passed should return false")
+    @DisplayName("When class B local IP is passed should return true")
     public void withClassBLocalIp_shouldReturnTrue() {
-        assertTrue(IpAddressValidator.isLocalIpAddress("192.168.1.3"));
-    }
-
-    @Test
-    @DisplayName("When class C local IP is passed should return false")
-    public void withClassCLocalIp_shouldReturnTrue() {
         assertTrue(IpAddressValidator.isLocalIpAddress("172.16.0.23"));
     }
 
+    @Test
+    @DisplayName("When class C local IP is passed should return true")
+    public void withClassCLocalIp_shouldReturnTrue() {
+        assertTrue(IpAddressValidator.isLocalIpAddress("192.168.1.3"));
+    }
 }
