@@ -18,4 +18,6 @@
     <string name="scan_qr_code_info">or scan the in-app QR code</string>
     <string name="close_connection_button_text">Close connection</string>
     <string name="file_sharing_activity_title">Share your file</string>
+    <string name="invalid_ip_address_toast_text">Invalid IP Address</string>
+    <string name="connection_already_established_toast_text">A connection is already established</string>
 </resources>

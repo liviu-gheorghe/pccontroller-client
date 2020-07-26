@@ -19,4 +19,6 @@
     <string name="scan_qr_code_info">sau scaneaza codul QR din aplicatie</string>
     <string name="close_connection_button_text">Inchide conexiunea</string>
     <string name="file_sharing_activity_title">Paratajeaza fisierul</string>
+    <string name="invalid_ip_address_toast_text">Adresa IP este invalida</string>
+    <string name="connection_already_established_toast_text">O conexiune este deja stabilita</string>
 </resources>

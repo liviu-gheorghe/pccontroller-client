@@ -9,6 +9,9 @@ import android.os.Build;
 import android.os.IBinder;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.ui.LauncherActivity;
 import com.pccontroller.R;
@@ -16,10 +19,8 @@ import com.pccontroller.R;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
-
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
 
 
 public class Connection extends Service {
@@ -30,6 +31,7 @@ public class Connection extends Service {
     private DataOutputStream outputStream;
     private Connection.ActionHandler actionHandler;
     private Connection.ActionDispatcher actionDispatcher;
+    private final int SOCKET_TIMEOUT = 1000;
 
     public class ConnectionBinder extends Binder {
         public Connection getConnection() {
@@ -87,7 +89,8 @@ public class Connection extends Service {
     private void createSocket(String host,int port) throws IOException {
 
             try {
-                socket = new Socket(host, port);
+                socket = new Socket();
+                socket.connect(new InetSocketAddress(host, port), SOCKET_TIMEOUT);
                 inputStream = getSocketInputStream(socket);
                 outputStream = getSocketOutputStream(socket);
             } catch (IOException e) {
