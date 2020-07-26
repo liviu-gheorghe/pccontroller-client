@@ -10,18 +10,22 @@ import android.os.Build;
 import androidx.core.app.NotificationManagerCompat;
 
 public class App extends Application {
-    
+
     public static final String BACKGROUND_SERVICE_CHANNEL_ID = "backgroundServiceChannel";
     public static final String FILE_SHARING_SERVICE_CHANNEL_ID = "fileSharingServiceChannel";
     public static final String EXTRA_TARGET_IP_ADDRESS = "TARGET_IP_ADDRESS";
     public static final String EXTRA_FILE_URI = "EXTRA_FILE_URI";
     public static final String EXTRA_TARGET_HOSTNAME = "TARGET_HOSTNAME";
+    public static final String BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY = "LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY";
+    public static final String BROADCAST_LEAVE_WAIT_FOR_PERMISSION_ACTIVITY = "LEAVE_WAIT_FOR_PERMISSION_ACTIVITY";
+
+
     public final static int SERVER_PORT = 8560;
     public final static int FILE_SERVER_PORT = 8561;
     public static boolean CONNECTION_ALIVE = false;
     public static String CONNECTED_DEVICE_HOSTNAME = "";
     public static String CONNECTED_DEVICE_IP_ADDRESS = null;
-    
+
     private static Context context;
 
     public static Context getAppContext() {

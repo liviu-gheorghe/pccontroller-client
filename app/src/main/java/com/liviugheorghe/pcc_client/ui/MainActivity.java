@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.liviugheorghe.pcc_client.App;
+import com.liviugheorghe.pcc_client.backend.Client;
 import com.liviugheorghe.pcc_client.util.IpAddressValidator;
 import com.pccontroller.R;
 
@@ -30,14 +31,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GET_QR_CODE_INFORMATION) {
-            if (resultCode == Activity.RESULT_OK) {
-                Intent intent = new Intent(
-                        MainActivity.this,
-                        WaitForPermissionActivity.class
-                );
-                intent.putExtra(App.EXTRA_TARGET_IP_ADDRESS, data.getStringExtra(App.EXTRA_TARGET_IP_ADDRESS));
-                startActivity(intent);
-                finish();
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                Intent serviceIntent = new Intent(
+                        this,
+                        Client.class
+                ).putExtra(App.EXTRA_TARGET_IP_ADDRESS, data.getStringExtra(App.EXTRA_TARGET_IP_ADDRESS));
+                startService(serviceIntent);
             } else {
                 Toast.makeText(this, R.string.invalid_ip_address_toast_text, Toast.LENGTH_SHORT).show();
             }
@@ -59,13 +58,11 @@ public class MainActivity extends AppCompatActivity {
         if (!IpAddressValidator.isLocalIpAddress(targetIpAddress))
             Toast.makeText(this, R.string.invalid_ip_address_toast_text, Toast.LENGTH_SHORT).show();
         else {
-            Intent intent = new Intent(
-                    MainActivity.this,
-                    WaitForPermissionActivity.class
-            );
-            intent.putExtra(App.EXTRA_TARGET_IP_ADDRESS, targetIpAddress);
-            startActivity(intent);
-            finish();
+            Intent serviceIntent = new Intent(
+                    this,
+                    Client.class
+            ).putExtra(App.EXTRA_TARGET_IP_ADDRESS, targetIpAddress);
+            startService(serviceIntent);
         }
     }
 
@@ -74,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, R.string.connection_already_established_toast_text, Toast.LENGTH_SHORT).show();
         } else {
             startActivityForResult(new Intent(getApplicationContext(), QrCodeScannerActivity.class), GET_QR_CODE_INFORMATION);
-            finish();
         }
     }
 }

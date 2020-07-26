@@ -11,6 +11,8 @@ import android.os.IBinder;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.backend.Client;
 import com.liviugheorghe.pcc_client.backend.DispatchedActionsCodes;
@@ -18,8 +20,6 @@ import com.pccontroller.R;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class LinkSharingActivity extends AppCompatActivity {
 
@@ -31,8 +31,8 @@ public class LinkSharingActivity extends AppCompatActivity {
     private final BroadcastReceiver serviceBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            
-            if (intent.getAction().equals("LEAVE_CONTROL_INTERFACE_ACTIVITY")) {
+            if (intent.getAction() == null) return;
+            if (intent.getAction().equals(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY)) {
                 onResume();
             }
         }
@@ -44,7 +44,7 @@ public class LinkSharingActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_link_sharing);
-        registerReceiver(serviceBroadcastReceiver,new IntentFilter("LEAVE_CONTROL_INTERFACE_ACTIVITY"));
+        registerReceiver(serviceBroadcastReceiver, new IntentFilter(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
         button = findViewById(R.id.link_sharing_button);
         textView = findViewById(R.id.link_sharing_text);
 
@@ -93,11 +93,11 @@ public class LinkSharingActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (App.CONNECTION_ALIVE) {
-            textView.setText("Connected device : " + App.CONNECTED_DEVICE_HOSTNAME);
-            button.setText("Send");
+            textView.setText(String.format("%s : %s", getResources().getString(R.string.connection_service_notification_text), App.CONNECTED_DEVICE_HOSTNAME));
+            button.setText(R.string.send_link_button_text);
         } else {
-            textView.setText("No device connected");
-            button.setText("Connect to a device");
+            textView.setText(R.string.device_not_connected_text);
+            button.setText(R.string.connect_to_a_device_button_text);
         }
     }
 

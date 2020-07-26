@@ -10,11 +10,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.backend.FileConnection;
 import com.pccontroller.R;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import static com.liviugheorghe.pcc_client.App.EXTRA_FILE_URI;
 
@@ -29,7 +29,8 @@ public class FileSharingActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            if(intent.getAction().equals("LEAVE_CONTROL_INTERFACE_ACTIVITY")) {
+            if (intent.getAction() == null) return;
+            if (intent.getAction().equals(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY)) {
                 onResume();
             }
         }
@@ -40,15 +41,16 @@ public class FileSharingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_sharing);
-        registerReceiver(serviceBroadcastReceiver,new IntentFilter("LEAVE_CONTROL_INTERFACE_ACTIVITY"));
+        registerReceiver(serviceBroadcastReceiver, new IntentFilter(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
 
         textView = findViewById(R.id.file_sharing_text);
         button  = findViewById(R.id.file_sharing_button);
 
         Uri uri = (Uri) getIntent().getExtras().get(Intent.EXTRA_STREAM);
         if(uri == null) {
-            Toast.makeText(this,"Invalid file",Toast.LENGTH_SHORT).show();
-            button.setOnClickListener((view)->{});
+            Toast.makeText(this, R.string.invalid_file_toast_text, Toast.LENGTH_SHORT).show();
+            button.setOnClickListener((view) -> {
+            });
         }
         else
         button.setOnClickListener(view -> {
@@ -73,11 +75,11 @@ public class FileSharingActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (App.CONNECTION_ALIVE) {
-            textView.setText("Connected device : " + App.CONNECTED_DEVICE_HOSTNAME);
-            button.setText("Send");
+            textView.setText(String.format("%s : %s", getResources().getString(R.string.connection_service_notification_text), App.CONNECTED_DEVICE_HOSTNAME));
+            button.setText(R.string.send_file_button_text);
         } else {
-            textView.setText("No device connected");
-            button.setText("Connect to a device");
+            textView.setText(R.string.device_not_connected_text);
+            button.setText(R.string.connect_to_a_device_button_text);
         }
     }
 
