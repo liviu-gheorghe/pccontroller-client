@@ -73,7 +73,7 @@ public class Client extends Service {
 			}
 		};
 		bindService(serviceIntent, serviceConnection, 0);
-		Notification notification = createServiceNotification("PC Controller is active.", App.BACKGROUND_SERVICE_CHANNEL_ID);
+		Notification notification = createServiceNotification(getResources().getString(R.string.client_service_notification_text), App.BACKGROUND_SERVICE_CHANNEL_ID);
 		startForeground(1, notification);
 		return START_NOT_STICKY;
 	}

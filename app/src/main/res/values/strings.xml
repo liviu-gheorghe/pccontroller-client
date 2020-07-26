@@ -20,4 +20,13 @@
     <string name="file_sharing_activity_title">Share your file</string>
     <string name="invalid_ip_address_toast_text">Invalid IP Address</string>
     <string name="connection_already_established_toast_text">A connection is already established</string>
+    <string name="device_not_reachable_toast_text">The device is not reachable</string>
+    <string name="connection_service_notification_text">Connected to</string>
+    <string name="client_service_notification_text">PC Controller is active</string>
+    <string name="device_not_connected_text">No device connected</string>
+    <string name="connect_to_a_device_button_text">Connect to a device</string>
+    <string name="send_file_button_text">Send file</string>
+    <string name="send_link_button_text">Send link</string>
+    <string name="invalid_file_toast_text">Invalid file</string>
+    <string name="invalid_link_toast_text">Invalid link</string>
 </resources>

@@ -21,4 +21,11 @@
     <string name="file_sharing_activity_title">Paratajeaza fisierul</string>
     <string name="invalid_ip_address_toast_text">Adresa IP este invalida</string>
     <string name="connection_already_established_toast_text">O conexiune este deja stabilita</string>
+    <string name="device_not_reachable_toast_text">Dispozitivul nu poate fi detectat</string>
+    <string name="connection_service_notification_text">Conectat la</string>
+    <string name="client_service_notification_text">PC Controller este activ</string>
+    <string name="device_not_connected_text">Niciun dispozitiv conectat</string>
+    <string name="connect_to_a_device_button_text">Conectare la un dispozitiv</string>
+    <string name="send_file_button_text">Trimitere fisier</string>
+    <string name="send_link_button_text">Trimitere link</string>
 </resources>
