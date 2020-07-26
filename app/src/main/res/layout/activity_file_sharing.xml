@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#DF4A16"
-            android:text="Connect to device" />
+            android:text="@string/connect_to_a_device_button_text" />
 
         <TextView
             android:id="@+id/file_sharing_text"
@@ -33,7 +33,7 @@
             android:layout_marginRight="0sp"
             android:layout_marginBottom="20sp"
             android:gravity="center"
-            android:text="Not connected to any device" />
+            android:text="@string/device_not_connected_text" />
 
     </LinearLayout>
 
