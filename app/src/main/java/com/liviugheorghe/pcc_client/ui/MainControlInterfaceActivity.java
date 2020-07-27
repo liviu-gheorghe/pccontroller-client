@@ -10,18 +10,17 @@ import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.backend.Client;
 import com.liviugheorghe.pcc_client.backend.DispatchedActionsCodes;
 import com.liviugheorghe.pcc_client.backend.FileConnection;
 import com.pccontroller.R;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import static com.liviugheorghe.pcc_client.App.EXTRA_FILE_URI;
 
@@ -35,8 +34,8 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
     private final BroadcastReceiver serviceBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-
-            if(intent.getAction().equals("LEAVE_CONTROL_INTERFACE_ACTIVITY")) {
+            if (intent.getAction() == null) return;
+            if (intent.getAction().equals(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY)) {
                 Intent i = new Intent(MainControlInterfaceActivity.this, LauncherActivity.class);
                 startActivity(i);
                 finish();
@@ -58,7 +57,7 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_control_interface);
-        registerReceiver(serviceBroadcastReceiver, new IntentFilter("LEAVE_CONTROL_INTERFACE_ACTIVITY"));
+        registerReceiver(serviceBroadcastReceiver, new IntentFilter(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
         //String hostname = getIntent().getStringExtra(App.TARGET_HOSTNAME);
         TextView hostnameTextView = findViewById(R.id.hostname);
         hostnameTextView.setText(App.CONNECTED_DEVICE_HOSTNAME);
@@ -95,20 +94,17 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_FILE && resultCode == Activity.RESULT_OK) {
-            Uri uri = null;
+            Uri uri;
             if (data != null) {
                 uri = data.getData();
                 if(uri == null) {
-                    Log.d(TAG, "onActivityResult: URI IS NULL");
                     return;
                 }
                 Intent serviceIntent = new Intent(this, FileConnection.class);
                 serviceIntent.putExtra(EXTRA_FILE_URI,uri.toString());
                 try {
                     startService(serviceIntent);
-                }
-                catch(Exception e) {
-                    Log.e(TAG, "Error starting the service");
+                } catch (Exception ignored) {
                 }
             }
         }

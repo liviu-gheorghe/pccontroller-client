@@ -35,8 +35,7 @@
         </activity>
         <activity
             android:name="com.liviugheorghe.pcc_client.ui.LinkSharingActivity"
-            android:label="Pc Controller Link Sharing"
-            >
+            android:label="Pc Controller Link Sharing">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -44,7 +43,10 @@
             </intent-filter>
         </activity>
         <activity android:name="com.liviugheorghe.pcc_client.ui.MainControlInterfaceActivity" />
-        <activity android:name="com.liviugheorghe.pcc_client.ui.MainActivity" />
+        <activity
+            android:name="com.liviugheorghe.pcc_client.ui.MainActivity"
+            android:screenOrientation="portrait" />
+
         <service android:name="com.liviugheorghe.pcc_client.backend.Connection" />
         <service android:name="com.liviugheorghe.pcc_client.backend.Client" />
         <service android:name="com.liviugheorghe.pcc_client.backend.FileConnection" />

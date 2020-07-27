@@ -9,17 +9,19 @@ import android.os.Build;
 import android.os.IBinder;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.ui.LauncherActivity;
+import com.liviugheorghe.pcc_client.ui.WaitForPermissionActivity;
 import com.pccontroller.R;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
-
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
 
 
 public class Connection extends Service {
@@ -30,6 +32,7 @@ public class Connection extends Service {
     private DataOutputStream outputStream;
     private Connection.ActionHandler actionHandler;
     private Connection.ActionDispatcher actionDispatcher;
+    private final int SOCKET_TIMEOUT = 1000;
 
     public class ConnectionBinder extends Binder {
         public Connection getConnection() {
@@ -54,17 +57,25 @@ public class Connection extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         targetIpAddress = intent.getStringExtra(App.EXTRA_TARGET_IP_ADDRESS);
-        if(targetIpAddress == null) stopSelf();
+        if (targetIpAddress == null) stopSelf();
+        boolean isDeviceReachable = true;
         try {
-            createSocket(targetIpAddress,App.SERVER_PORT);
+            createSocket(targetIpAddress, App.SERVER_PORT);
         } catch (IOException e) {
+            isDeviceReachable = false;
             e.printStackTrace();
-            Toast.makeText(this,"The device is not reachable",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.device_not_reachable_toast_text, Toast.LENGTH_LONG).show();
             stopSelf();
         }
-        actionHandler = new ActionHandler(inputStream);
-        actionDispatcher = new ActionDispatcher(outputStream);
-        sendConnectionRequest();
+
+        if (isDeviceReachable) {
+            Intent i = new Intent(this, WaitForPermissionActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
+            actionHandler = new ActionHandler(inputStream);
+            actionDispatcher = new ActionDispatcher(outputStream);
+            sendConnectionRequest();
+        }
         return START_NOT_STICKY;
     }
 
@@ -77,17 +88,21 @@ public class Connection extends Service {
     }
 
     private void onConnectionAccepted() {
-        Notification notification = createServiceNotification("Connected to " + targetIpAddress, App.BACKGROUND_SERVICE_CHANNEL_ID);
-        startForeground(2,notification);
+        Notification notification = createServiceNotification(
+                String.format("%s %s", getResources().getString(R.string.connection_service_notification_text), targetIpAddress),
+                App.BACKGROUND_SERVICE_CHANNEL_ID
+        );
+        startForeground(2, notification);
         App.CONNECTION_ALIVE = true;
         App.CONNECTED_DEVICE_IP_ADDRESS = targetIpAddress;
-        sendBroadcast(new Intent("LEAVE_WAIT_FOR_PERMISSION_ACTIVITY"));
+        sendBroadcast(new Intent(App.BROADCAST_LEAVE_WAIT_FOR_PERMISSION_ACTIVITY));
     }
 
     private void createSocket(String host,int port) throws IOException {
 
             try {
-                socket = new Socket(host, port);
+                socket = new Socket();
+                socket.connect(new InetSocketAddress(host, port), SOCKET_TIMEOUT);
                 inputStream = getSocketInputStream(socket);
                 outputStream = getSocketOutputStream(socket);
             } catch (IOException e) {
@@ -106,8 +121,8 @@ public class Connection extends Service {
 
     public void onDestroy() {
         super.onDestroy();
-        sendBroadcast(new Intent("LEAVE_CONTROL_INTERFACE_ACTIVITY"));
-        sendBroadcast(new Intent("LEAVE_WAIT_FOR_PERMISSION_ACTIVITY"));
+        sendBroadcast(new Intent(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
+        sendBroadcast(new Intent(App.BROADCAST_LEAVE_WAIT_FOR_PERMISSION_ACTIVITY));
         App.CONNECTION_ALIVE = false;
         try {
             socket.close();
@@ -148,7 +163,7 @@ public class Connection extends Service {
             }
             else if(type == ReceivedActionsCodes.RECEIVE_CONNECTION_REJECTION)
             {
-                sendBroadcast(new Intent("LEAVE_WAIT_FOR_PERMISSION_ACTIVITY"));
+                sendBroadcast(new Intent(App.BROADCAST_LEAVE_WAIT_FOR_PERMISSION_ACTIVITY));
             }
             else {
                 Action action = ActionFactory.createAction(type, content);
