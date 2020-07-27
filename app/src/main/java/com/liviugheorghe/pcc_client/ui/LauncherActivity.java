@@ -6,7 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.liviugheorghe.pcc_client.App;
-import com.pccontroller.R;
+import com.liviugheorghe.pcc_client.R;
 
 public class LauncherActivity extends AppCompatActivity {
 

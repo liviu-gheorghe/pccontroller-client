@@ -4,36 +4,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorDark"
     tools:context="com.liviugheorghe.pcc_client.ui.FileSharingActivity">
 
-    <LinearLayout
+
+    <Button
+        android:id="@+id/file_sharing_button"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#000000"
-        android:gravity="center"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:background="#DF4A16"
+        android:text="@string/connect_to_a_device_button_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/connected_device_information_container" />
 
-        <Button
-            android:id="@+id/file_sharing_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#DF4A16"
-            android:text="@string/connect_to_a_device_button_text" />
+
+    <LinearLayout
+        android:id="@+id/connected_device_information_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/file_sharing_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/file_information_container">
 
         <TextView
             android:id="@+id/file_sharing_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="0sp"
-            android:layout_marginTop="20sp"
-            android:layout_marginRight="0sp"
-            android:layout_marginBottom="20sp"
             android:gravity="center"
             android:text="@string/device_not_connected_text" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/file_information_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/connected_device_information_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="File name" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Size"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Type" />
 
     </LinearLayout>
 

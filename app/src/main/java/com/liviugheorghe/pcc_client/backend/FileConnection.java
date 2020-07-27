@@ -10,8 +10,11 @@ import android.os.IBinder;
 import android.provider.OpenableColumns;
 import android.webkit.MimeTypeMap;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+
 import com.liviugheorghe.pcc_client.App;
-import com.pccontroller.R;
+import com.liviugheorghe.pcc_client.R;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -19,9 +22,6 @@ import java.io.FileNotFoundException;
 import java.net.Socket;
 import java.util.Locale;
 import java.util.UUID;
-
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
 
 import static com.liviugheorghe.pcc_client.App.EXTRA_FILE_URI;
 

@@ -6,13 +6,13 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.core.app.NotificationCompat;
+
 import com.liviugheorghe.pcc_client.App;
+import com.liviugheorghe.pcc_client.R;
 import com.liviugheorghe.pcc_client.backend.Action;
 import com.liviugheorghe.pcc_client.backend.ReceivedActionsCodes;
 import com.liviugheorghe.pcc_client.ui.LauncherActivity;
-import com.pccontroller.R;
-
-import androidx.core.app.NotificationCompat;
 
 public class ActionReceivePing implements Action {
 	

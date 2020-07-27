@@ -29,4 +29,6 @@
     <string name="send_link_button_text">Send link</string>
     <string name="invalid_file_toast_text">Invalid file</string>
     <string name="invalid_link_toast_text">Invalid link</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

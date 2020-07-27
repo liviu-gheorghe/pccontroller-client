@@ -3,7 +3,6 @@ package com.liviugheorghe.pcc_client;
 import androidx.test.rule.ActivityTestRule;
 
 import com.liviugheorghe.pcc_client.ui.MainActivity;
-import com.pccontroller.R;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -43,4 +42,6 @@ public class MainActivityTest {
         onView(withId(R.id.connect_button)).perform(click());
         onView(withText(R.string.invalid_ip_address_toast_text)).inRoot(withDecorView(not(rule.getActivity().getWindow().getDecorView()))).check(matches(isDisplayed()));
     }
+
+
 }

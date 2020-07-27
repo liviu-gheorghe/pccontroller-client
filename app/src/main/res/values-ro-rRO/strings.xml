@@ -28,4 +28,6 @@
     <string name="connect_to_a_device_button_text">Conectare la un dispozitiv</string>
     <string name="send_file_button_text">Trimitere fisier</string>
     <string name="send_link_button_text">Trimitere link</string>
+    <string name="invalid_file_toast_text">Fisier invalid</string>
+    <string name="invalid_link_toast_text">Link Invalid</string>
 </resources>

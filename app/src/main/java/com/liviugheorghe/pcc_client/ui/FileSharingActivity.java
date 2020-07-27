@@ -13,8 +13,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.liviugheorghe.pcc_client.App;
+import com.liviugheorghe.pcc_client.R;
 import com.liviugheorghe.pcc_client.backend.FileConnection;
-import com.pccontroller.R;
 
 import static com.liviugheorghe.pcc_client.App.EXTRA_FILE_URI;
 
