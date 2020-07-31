@@ -13,9 +13,9 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.liviugheorghe.pcc_client.App;
+import com.liviugheorghe.pcc_client.R;
 import com.liviugheorghe.pcc_client.ui.LauncherActivity;
 import com.liviugheorghe.pcc_client.ui.WaitForPermissionActivity;
-import com.pccontroller.R;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

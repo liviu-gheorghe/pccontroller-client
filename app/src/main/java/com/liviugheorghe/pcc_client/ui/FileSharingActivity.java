@@ -4,34 +4,50 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.Button;
+import android.provider.OpenableColumns;
+import android.webkit.MimeTypeMap;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.liviugheorghe.pcc_client.App;
+import com.liviugheorghe.pcc_client.R;
 import com.liviugheorghe.pcc_client.backend.FileConnection;
-import com.pccontroller.R;
+import com.liviugheorghe.pcc_client.util.FileInformation;
 
-import static com.liviugheorghe.pcc_client.App.EXTRA_FILE_URI;
+import java.util.UUID;
+
+import static android.content.Intent.EXTRA_STREAM;
+import static com.liviugheorghe.pcc_client.App.EXTRA_FILE_NAME;
+import static com.liviugheorghe.pcc_client.App.EXTRA_FILE_SIZE;
+import static com.liviugheorghe.pcc_client.App.EXTRA_FILE_TYPE;
 
 public class FileSharingActivity extends AppCompatActivity {
 
     private final String TAG = this.getClass().getSimpleName();
     private TextView textView;
-    private Button button;
-    private Uri uri;
-
+    private FloatingActionButton button;
+    private FragmentManager fragmentManager = getSupportFragmentManager();
+    private FileInformation fileInformation;
+    private Drawable connectToADeviceDrawable;
+    private Drawable sendFileDrawable;
     private final BroadcastReceiver serviceBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
             if (intent.getAction() == null) return;
             if (intent.getAction().equals(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY)) {
-                onResume();
+                updateConnectionInfo();
             }
         }
     };
@@ -41,51 +57,101 @@ public class FileSharingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_sharing);
+
+        connectToADeviceDrawable = ContextCompat.getDrawable(this, R.drawable.ic_icon_connect_to_device);
+        sendFileDrawable = ContextCompat.getDrawable(this, R.drawable.ic_icon_send);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         registerReceiver(serviceBroadcastReceiver, new IntentFilter(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
 
         textView = findViewById(R.id.file_sharing_text);
-        button  = findViewById(R.id.file_sharing_button);
+        button = findViewById(R.id.file_sharing_button);
 
-        Uri uri = (Uri) getIntent().getExtras().get(Intent.EXTRA_STREAM);
-        if(uri == null) {
-            Toast.makeText(this, R.string.invalid_file_toast_text, Toast.LENGTH_SHORT).show();
-            button.setOnClickListener((view) -> {
+
+        if (getIntent().getExtras() == null || getIntent().getExtras().get(EXTRA_STREAM) == null) {
+            Toast.makeText(this, R.string.invalid_file_toast_text, Toast.LENGTH_LONG).show();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            MissingFileFragment missingFileFragment = new MissingFileFragment();
+            transaction.replace(R.id.file_information_container, missingFileFragment);
+            transaction.commit();
+        } else {
+            Uri uri = (Uri) getIntent().getExtras().get(EXTRA_STREAM);
+            fileInformation = getFileInformation(uri);
+            if (fileInformation.getName() == null)
+                fileInformation.setName(UUID.randomUUID().toString() + "." + fileInformation.getType());
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            FileInformationFragment fileInformationFragment = new FileInformationFragment(
+                    fileInformation.getName(),
+                    fileInformation.getSize(),
+                    fileInformation.getType()
+            );
+            transaction.replace(R.id.file_information_container, fileInformationFragment);
+            transaction.commit();
+            button.setOnClickListener(view -> {
+                if (App.CONNECTION_ALIVE) {
+                    Intent serviceIntent = new Intent(this, FileConnection.class);
+                    serviceIntent.putExtra(EXTRA_STREAM, uri.toString());
+                    serviceIntent.putExtra(EXTRA_FILE_NAME, fileInformation.getName());
+                    serviceIntent.putExtra(EXTRA_FILE_SIZE, fileInformation.getSize());
+                    serviceIntent.putExtra(EXTRA_FILE_TYPE, fileInformation.getType());
+                    try {
+                        startService(serviceIntent);
+                    } catch (Exception e) {
+                    }
+                } else {
+                    Intent intent = new Intent(FileSharingActivity.this, LauncherActivity.class);
+                    startActivity(intent);
+                }
+                finish();
             });
         }
-        else
-        button.setOnClickListener(view -> {
-            if(App.CONNECTION_ALIVE) {
-                Intent serviceIntent = new Intent(this, FileConnection.class);
-                serviceIntent.putExtra(EXTRA_FILE_URI,uri.toString());
-                try {
-                    startService(serviceIntent);
-                }
-                catch(Exception e) {
-                }
-            }
-            else {
-                Intent intent = new Intent(FileSharingActivity.this, LauncherActivity.class);
-                startActivity(intent);
-            }
-            finish();
-        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        updateConnectionInfo();
+    }
+
+    private void updateConnectionInfo() {
         if (App.CONNECTION_ALIVE) {
             textView.setText(String.format("%s : %s", getResources().getString(R.string.connection_service_notification_text), App.CONNECTED_DEVICE_HOSTNAME));
-            button.setText(R.string.send_file_button_text);
+            button.setImageDrawable(sendFileDrawable);
         } else {
+            button.setImageDrawable(connectToADeviceDrawable);
             textView.setText(R.string.device_not_connected_text);
-            button.setText(R.string.connect_to_a_device_button_text);
         }
     }
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(serviceBroadcastReceiver);
+    }
+
+    private FileInformation getFileInformation(Uri uri) {
+        FileInformation fileInformation = new FileInformation();
+        try (Cursor cursor = getContentResolver().query(uri, null, null, null, null, null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                fileInformation.setName(cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)));
+                int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
+                String size;
+                if (!cursor.isNull(sizeIndex))
+                    size = cursor.getString(sizeIndex);
+                else
+                    size = "Unknown";
+
+                fileInformation.setSize(size);
+            }
+            String mimeType = getContentResolver().getType(uri);
+            if (mimeType != null)
+                fileInformation.setType(MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return fileInformation;
     }
 }

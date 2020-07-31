@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="file_information_fragment_text_left_padding">5sp</dimen>
+    <dimen name="fab_margin">10dp</dimen>
+</resources>

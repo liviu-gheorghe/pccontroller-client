@@ -3,10 +3,10 @@ package com.liviugheorghe.pcc_client.ui;
 import android.os.Bundle;
 import android.view.MotionEvent;
 
-import com.pccontroller.R;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
+
+import com.liviugheorghe.pcc_client.R;
 
 
 public class TouchpadActivity extends AppCompatActivity {

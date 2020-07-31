@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.liviugheorghe.pcc_client.ui.MainControlInterfaceActivity">
+
+    <item
+        android:icon="@drawable/ic_disconnect"
+        android:onClick="clickCloseConnectionButton"
+        android:orderInCategory="100"
+        android:title="@string/activity_main_control_interface_menu_action_disconnect"
+        app:showAsAction="ifRoom"></item>
+
+</menu>
