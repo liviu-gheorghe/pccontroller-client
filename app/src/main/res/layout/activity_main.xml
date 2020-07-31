@@ -37,6 +37,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/textView"
         android:layout_width="wrap_content"
+        android:paddingTop="@dimen/main_activity_laptop_image_padding"
+        android:paddingBottom="@dimen/main_activity_laptop_image_padding"
         app:srcCompat="@drawable/ic_laptop_mac_orange_100dp" />
 
 
