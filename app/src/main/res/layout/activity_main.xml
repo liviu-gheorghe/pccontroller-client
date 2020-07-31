@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
     tools:context="com.liviugheorghe.pcc_client.ui.MainActivity">
 
 
-    <Button
-        android:id="@+id/connect_button"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#F4511E"
-        android:onClick="connectButtonClick"
-        android:text="@string/ec_button_text"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="match_parent"
+        android:background="?android:attr/colorBackground"
+        tools:context="com.liviugheorghe.pcc_client.ui.MainActivity">
+
+
+        <Button
+            android:id="@+id/connect_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:onClick="connectButtonClick"
+            android:text="@string/ec_button_text"
+            android:textColor="?attr/primaryButtonTextColor"
+            app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/computer_ip_text_field" />
 
@@ -40,6 +48,7 @@
         android:paddingTop="10sp"
         android:paddingBottom="10sp"
         android:text="@string/ts_activity_title"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,19 +69,19 @@
             android:id="@+id/start_scan_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#00FFFFFF"
             android:onClick="startScanButtonClick"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/qrcode_64" />
+            android:background="@color/colorTransparent"
+            app:srcCompat="@drawable/ic_qr_code_icon" />
 
         <TextView
-            android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/scan_qr_code_info"
+            android:textColor="?android:attr/textColorPrimary"
             app:layout_constraintBottom_toTopOf="@+id/start_scan_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -91,11 +100,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/computer_ip_text_input_placeholder"
-            android:textColor="#FFFFFF"
-            android:textColorHighlight="#00897B"
-            android:textColorHint="#FFFFFF"
-            android:textColorLink="#00897B"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textColorHighlight="@color/colorPrimary"
+            android:textColorHint="?android:attr/textColorPrimary"
+            android:textColorLink="@color/colorPrimary"
             android:textIsSelectable="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

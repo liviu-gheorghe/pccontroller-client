@@ -4,14 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground"
     tools:context="com.liviugheorghe.pcc_client.ui.TouchpadActivity">
 
     <TextView
         android:id="@+id/touchpad_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#000000"
+        android:background="@color/colorTransparent"
         android:gravity="center"
+        android:textColor="?android:attr/textColorPrimary"
         android:text="@string/touchpad_usage_info"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
