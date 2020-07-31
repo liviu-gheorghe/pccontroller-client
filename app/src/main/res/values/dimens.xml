@@ -2,4 +2,5 @@
 <resources>
     <dimen name="file_information_fragment_text_left_padding">5sp</dimen>
     <dimen name="fab_margin">10dp</dimen>
+    <dimen name="main_activity_laptop_image_padding">10dp</dimen>
 </resources>

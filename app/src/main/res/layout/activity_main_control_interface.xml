@@ -32,6 +32,14 @@
                 android:background="@color/colorTransparent"
                 android:gravity="center">
 
+
+                <TextView
+                    android:id="@+id/hostname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="?android:attr/textColorPrimary" />
+
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -239,13 +247,6 @@
                         android:onClick="clickOpenFile"
                         app:srcCompat="@drawable/ic_file_upload_orange_50dp" />
                 </TableRow>
-
-                <TextView
-                    android:id="@+id/hostname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="?android:attr/textColorPrimary" />
             </TableLayout>
         </ScrollView>
 
