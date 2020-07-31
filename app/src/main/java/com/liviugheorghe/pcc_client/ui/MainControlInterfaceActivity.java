@@ -10,19 +10,21 @@ import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.R;
 import com.liviugheorghe.pcc_client.backend.Client;
 import com.liviugheorghe.pcc_client.backend.DispatchedActionsCodes;
-import com.liviugheorghe.pcc_client.backend.FileConnection;
 
-import static com.liviugheorghe.pcc_client.App.EXTRA_FILE_URI;
+import static android.content.Intent.EXTRA_STREAM;
 
 public class MainControlInterfaceActivity extends AppCompatActivity {
 
@@ -30,12 +32,13 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
     private Client client;
     private final String TAG = this.getClass().getSimpleName();
     private ServiceConnection serviceConnection;
+    private boolean isInForeground = false;
 
     private final BroadcastReceiver serviceBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction() == null) return;
-            if (intent.getAction().equals(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY)) {
+            if (intent.getAction().equals(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY) && isInForeground) {
                 Intent i = new Intent(MainControlInterfaceActivity.this, LauncherActivity.class);
                 startActivity(i);
                 finish();
@@ -57,21 +60,25 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_control_interface);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         registerReceiver(serviceBroadcastReceiver, new IntentFilter(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
         //String hostname = getIntent().getStringExtra(App.TARGET_HOSTNAME);
         TextView hostnameTextView = findViewById(R.id.hostname);
         hostnameTextView.setText(App.CONNECTED_DEVICE_HOSTNAME);
-    
+
         serviceConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder service) {
                 Client.ClientBinder binder = (Client.ClientBinder) service;
                 client = binder.getClient();
             }
-        
+
             @Override
             public void onServiceDisconnected(ComponentName componentName) {
-            
+
             }
         };
         Intent serviceIntent = new Intent(this, Client.class);
@@ -79,8 +86,21 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main_control_interface_appbar_menu, menu);
+        return true;
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
+        isInForeground = true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        isInForeground = false;
     }
 
     @Override
@@ -97,13 +117,13 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
             Uri uri;
             if (data != null) {
                 uri = data.getData();
-                if(uri == null) {
+                if (uri == null) {
                     return;
                 }
-                Intent serviceIntent = new Intent(this, FileConnection.class);
-                serviceIntent.putExtra(EXTRA_FILE_URI,uri.toString());
+                Intent fileSharingActivityIntent = new Intent(this, FileSharingActivity.class);
+                fileSharingActivityIntent.putExtra(EXTRA_STREAM, uri);
                 try {
-                    startService(serviceIntent);
+                    startActivity(fileSharingActivityIntent);
                 } catch (Exception ignored) {
                 }
             }
@@ -118,9 +138,6 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
         }
     }
 
-    public void clickCloseConnectionButton(View v) {
-        client.closeConnection();
-    }
 
     public void clickOpenTouchPad(View v) {
         startActivity(new Intent(this, TouchpadActivity.class));
@@ -131,5 +148,9 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
         intent.setType("*/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         startActivityForResult(intent, PICK_FILE);
+    }
+
+    public void clickCloseConnectionButton(MenuItem item) {
+        client.closeConnection();
     }
 }

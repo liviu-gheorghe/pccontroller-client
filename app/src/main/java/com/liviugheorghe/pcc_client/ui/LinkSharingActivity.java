@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.R;
@@ -44,15 +45,19 @@ public class LinkSharingActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_link_sharing);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         registerReceiver(serviceBroadcastReceiver, new IntentFilter(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
         button = findViewById(R.id.link_sharing_button);
         textView = findViewById(R.id.link_sharing_text);
 
 
-            String extraString = getIntent().getStringExtra(Intent.EXTRA_TEXT);
-            if (extraString == null) return;
-            Pattern pattern = Pattern.compile("http.+");
-            Matcher matcher = pattern.matcher(extraString);
+        String extraString = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+        if (extraString == null) return;
+        Pattern pattern = Pattern.compile("http.+");
+        Matcher matcher = pattern.matcher(extraString);
             if (matcher.find()) {
                 link = matcher.group(0);
             }
