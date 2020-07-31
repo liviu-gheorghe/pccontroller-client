@@ -30,4 +30,13 @@
     <string name="send_link_button_text">Trimitere link</string>
     <string name="invalid_file_toast_text">Fisier invalid</string>
     <string name="invalid_link_toast_text">Link Invalid</string>
+    <string name="no_file_selected_text">Niciun ifisier selectat</string>
+    <string name="selected_file_name_text">Nume</string>
+    <string name="selected_file_type_text">Tip</string>
+    <string name="selected_file_size_text">Dimensiune</string>
+    <string name="unknown_value_text">Necunoscut</string>
+    <string name="activity_main_menu_action_settings">Setari</string>
+    <string name="activity_main_menu_action_recently_connected_devices">Dispozitive</string>
+    <string name="activity_main_menu_action_help">Ajutor</string>
+    <string name="activity_main_control_interface_menu_action_disconnect">Deconectare</string>
 </resources>
