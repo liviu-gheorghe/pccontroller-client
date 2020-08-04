@@ -11,4 +11,8 @@ public class DispatchedActionsCodes {
     public static int ACTION_SEND_DEVICE_VOLUME_LEVEL = 7;
     public static int ACTION_SEND_FILE_TRANSMISSION_INTENT = 8;
     public static int ACTION_SEND_FILE = 9;
+    public static int ACTION_SEND_MOUSE_MOVE = 10;
+    public static int ACTION_SEND_MOUSE_CLICK = 11;
+    public static int ACTION_SEND_MOUSE_SCROLL = 12;
+    public static int ACTION_SEND_KEYBOARD_INPUT = 13;
 }

@@ -15,18 +15,25 @@
         tools:targetApi="m">
         <activity
             android:name="com.liviugheorghe.pcc_client.ui.FileSharingActivity"
-            android:label="PC Controller File Sharing"
-            >
+            android:label="PC Controller File Sharing">
             <intent-filter>
                 <action android:name="android.intent.action.OPEN_DOCUMENT" />
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="*/*" />
             </intent-filter>
         </activity>
         <activity android:name="com.liviugheorghe.pcc_client.ui.WaitForPermissionActivity" />
         <activity android:name="com.liviugheorghe.pcc_client.ui.QrCodeScannerActivity" />
-        <activity android:name="com.liviugheorghe.pcc_client.ui.TouchpadActivity" />
+        <activity
+            android:name="com.liviugheorghe.pcc_client.ui.TouchpadActivity"
+            android:parentActivityName=".ui.MainControlInterfaceActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.MainControlInterfaceActivity" />
+
+        </activity>
         <activity android:name="com.liviugheorghe.pcc_client.ui.LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

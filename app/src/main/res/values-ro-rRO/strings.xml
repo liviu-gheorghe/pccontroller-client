@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PcController</string>
+    <string name="app_name">Pc Controller</string>
     <string name="vol_up_button">-</string>
     <string name="vol_down_button">+</string>
     <string name="brightness_down_button">-</string>
     <string name="brightness_up_button">+</string>
     <string name="volume_bar">Volum</string>
     <string name="brightness_bar">Luminozitate</string>
-    <string name="ts_activity_title">Selecteaza dispozitivul</string>
+    <string name="ts_activity_title">Conectare la dispozitiv</string>
     <string name="ts_activity_scan">Cauta dispozitive</string>
     <string name="url_cmd_activity_title">Partajeaza link-ul</string>
     <string name="ec_button_text">Conectare</string>
     <string name="service_notification_title">PC Controller este activ</string>
-    <string name="touchpad_usage_info">Muta degetul pentru a misca cursorul.Apasa de doua ori pentru dublu click,foloseste doua degete pentru a derula in sus/jos</string>
+    <string name="touchpad_usage_info">
+        <li>Apasa pentru click stanga</li>\n
+        <li>Apasa lung pentru click dreapta</li>\n
+        <li>Muta degetul pentru a misca cursorul</li>\n
+        <li>Apasa de doua ori pentru dublu click</li>\n
+        <li>Foloseste doua degete pentru a derula in sus/jos</li>
+    </string>
     <string name="wait_for_permission_info">Accepta conexiunea de pe PC-ul tau</string>
     <string name="todo">TODO</string>
     <string name="computer_ip_text_input_placeholder">Adresa IP a computerului</string>
@@ -39,4 +45,6 @@
     <string name="activity_main_menu_action_recently_connected_devices">Dispozitive</string>
     <string name="activity_main_menu_action_help">Ajutor</string>
     <string name="activity_main_control_interface_menu_action_disconnect">Deconectare</string>
+    <string name="activity_touchpad_action_keyboard">Tastatura</string>
+    <string name="activity_touchpad_action_keyboard_voice">Vorbire</string>
 </resources>

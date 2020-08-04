@@ -6,13 +6,13 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.view.Menu;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.R;
 import com.liviugheorghe.pcc_client.backend.Client;
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, R.string.connection_already_established_toast_text, Toast.LENGTH_SHORT).show();
             return;
         }
-        TextInputEditText computerIpTextInput = findViewById(R.id.computer_ip_text_input);
+        EditText computerIpTextInput = findViewById(R.id.computer_ip_text_input);
         String targetIpAddress = "";
         Editable editable = computerIpTextInput.getText();
         if (editable != null) {

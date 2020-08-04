@@ -1,18 +1,24 @@
 <resources>
-    <string name="app_name">PcController</string>
+    <string name="app_name">Pc Controller</string>
     <string name="vol_up_button">-</string>
     <string name="vol_down_button">+</string>
     <string name="brightness_down_button">-</string>
     <string name="brightness_up_button">+</string>
     <string name="volume_bar">Volume</string>
     <string name="brightness_bar">Brightness</string>
-    <string name="ts_activity_title">Select your device</string>
+    <string name="ts_activity_title">Connect your device</string>
     <string name="ts_activity_scan">Scan for devices</string>
     <string name="url_cmd_activity_title">Share your link</string>
     <string name="ec_button_text">Connect</string>
     <string name="todo">TODO</string>
     <string name="service_notification_title">PC Controller Active</string>
-    <string name="touchpad_usage_info">Move your finger around to move the cursor. Press 2 times for double click,use 2 fingers to scroll up/down</string>
+    <string name="touchpad_usage_info">
+        <li>Short press for left click</li>\n
+        <li>Long press for right click</li>\n
+        <li>Move your finger around to move the cursor</li>\n
+        <li>Press 2 times for double click</li>\n
+        <li>Use 2 fingers to scroll up/down</li>
+    </string>
     <string name="wait_for_permission_info">Accept the connection from your PC</string>
     <string name="computer_ip_text_input_placeholder">Computer IP Address</string>
     <string name="scan_qr_code_info">or scan the in-app QR code</string>
@@ -38,5 +44,7 @@
     <string name="activity_main_menu_action_recently_connected_devices">Devices</string>
     <string name="activity_main_menu_action_help">Help</string>
     <string name="activity_main_control_interface_menu_action_disconnect">Disconnect</string>
+    <string name="activity_touchpad_action_keyboard">Keyboard</string>
+    <string name="activity_touchpad_action_keyboard_voice">Speech</string>
 
 </resources>
