@@ -23,7 +23,11 @@ public class FileInformationFragment extends Fragment {
     private String size;
     private String type;
 
-    FileInformationFragment(String name, String size, String type) {
+    public FileInformationFragment() {
+
+    }
+
+    public FileInformationFragment(String name, String size, String type) {
         this.name = name;
         this.size = size;
         this.type = type;
