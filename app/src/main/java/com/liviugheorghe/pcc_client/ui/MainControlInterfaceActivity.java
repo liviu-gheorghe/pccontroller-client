@@ -10,6 +10,7 @@ import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -104,6 +105,29 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+            try {
+                client.getConnection().dispatchAction(DispatchedActionsCodes.ACTION_EXECUTE_COMMAND, "vol_up");
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+            return true;
+        }
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+            try {
+                client.getConnection().dispatchAction(DispatchedActionsCodes.ACTION_EXECUTE_COMMAND, "vol_down");
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(serviceBroadcastReceiver);
@@ -151,6 +175,10 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
     }
 
     public void clickCloseConnectionButton(MenuItem item) {
-        client.closeConnection();
+        try {
+            client.closeConnection();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 }
