@@ -121,8 +121,6 @@ public class Connection extends Service {
 
     public void onDestroy() {
         super.onDestroy();
-        sendBroadcast(new Intent(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
-        sendBroadcast(new Intent(App.BROADCAST_LEAVE_WAIT_FOR_PERMISSION_ACTIVITY));
         App.CONNECTION_ALIVE = false;
         try {
             socket.close();
