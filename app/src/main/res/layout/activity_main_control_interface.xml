@@ -6,8 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context="com.liviugheorghe.pcc_client.ui.MainControlInterfaceActivity">
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,20 +18,18 @@
         <ScrollView
             android:id="@id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:fillViewport="true"
             app:layout_constraintTop_toTopOf="parent">
 
             <TableLayout
-                android:layout_gravity="center"
                 android:id="@+id/tableLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorTransparent"
-                android:gravity="center">
-
+                android:background="@color/colorTransparent">
 
                 <TextView
                     android:id="@+id/hostname"
@@ -40,21 +38,21 @@
                     android:gravity="center"
                     android:textColor="?android:attr/textColorPrimary" />
 
+
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal">
+                    android:gravity="center">
 
                     <ImageButton
                         android:id="@+id/br_down"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:contentDescription="@string/todo"
                         android:background="@color/colorTransparent"
+                        android:contentDescription="@string/todo"
                         android:onClick="clickActionView"
                         app:srcCompat="@drawable/ic_indeterminate_check_box_black_24dp" />
-
 
 
                     <TextView
@@ -83,12 +81,11 @@
 
                 </TableRow>
 
-
                 <TableRow
                     android:id="@+id/buttons_row_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal">
+                    android:gravity="center">
 
                     <ImageButton
                         android:id="@+id/vol_down"
@@ -126,6 +123,7 @@
 
 
                 </TableRow>
+
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -235,7 +233,6 @@
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15sp"
                     android:gravity="center_horizontal">
 
                     <ImageButton
@@ -247,9 +244,9 @@
                         android:onClick="clickOpenFile"
                         app:srcCompat="@drawable/ic_file_upload_orange_50dp" />
                 </TableRow>
+
             </TableLayout>
         </ScrollView>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -263,7 +260,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?android:attr/actionBarSize"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
