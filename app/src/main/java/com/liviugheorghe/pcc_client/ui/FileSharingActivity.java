@@ -13,6 +13,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -44,7 +45,6 @@ public class FileSharingActivity extends AppCompatActivity {
     private final BroadcastReceiver serviceBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-
             if (intent.getAction() == null) return;
             if (intent.getAction().equals(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY)) {
                 updateConnectionInfo();
@@ -53,17 +53,30 @@ public class FileSharingActivity extends AppCompatActivity {
     };
 
 
+    private void setToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
+
+    private void loadFABDrawables() {
+        connectToADeviceDrawable = ContextCompat.getDrawable(this, R.drawable.ic_icon_connect_to_device);
+        sendFileDrawable = ContextCompat.getDrawable(this, R.drawable.ic_icon_send);
+    }
+
+    private void handleInvalidFile() {
+        Toast.makeText(this, R.string.invalid_file_toast_text, Toast.LENGTH_LONG).show();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        MissingFileFragment missingFileFragment = new MissingFileFragment();
+        transaction.replace(R.id.file_information_container, missingFileFragment);
+        transaction.commit();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_sharing);
-
-        connectToADeviceDrawable = ContextCompat.getDrawable(this, R.drawable.ic_icon_connect_to_device);
-        sendFileDrawable = ContextCompat.getDrawable(this, R.drawable.ic_icon_send);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+        setToolbar();
+        loadFABDrawables();
         registerReceiver(serviceBroadcastReceiver, new IntentFilter(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
 
         textView = findViewById(R.id.file_sharing_text);
@@ -71,13 +84,13 @@ public class FileSharingActivity extends AppCompatActivity {
 
 
         if (getIntent().getExtras() == null || getIntent().getExtras().get(EXTRA_STREAM) == null) {
-            Toast.makeText(this, R.string.invalid_file_toast_text, Toast.LENGTH_LONG).show();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            MissingFileFragment missingFileFragment = new MissingFileFragment();
-            transaction.replace(R.id.file_information_container, missingFileFragment);
-            transaction.commit();
+            handleInvalidFile();
         } else {
-            Uri uri = (Uri) getIntent().getExtras().get(EXTRA_STREAM);
+            Uri uri;
+            if (savedInstanceState != null && savedInstanceState.getString(EXTRA_STREAM) != null)
+                uri = Uri.parse(savedInstanceState.getString(EXTRA_STREAM));
+            else
+                uri = (Uri) getIntent().getExtras().get(EXTRA_STREAM);
             fileInformation = getFileInformation(uri);
             if (fileInformation.getName() == null)
                 fileInformation.setName(UUID.randomUUID().toString() + "." + fileInformation.getType());
@@ -109,11 +122,26 @@ public class FileSharingActivity extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString(EXTRA_STREAM, fileInformation.getUri().toString());
+        super.onSaveInstanceState(outState);
+    }
+
+
     @Override
     protected void onResume() {
         super.onResume();
         updateConnectionInfo();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(serviceBroadcastReceiver);
+    }
+
 
     private void updateConnectionInfo() {
         if (App.CONNECTION_ALIVE) {
@@ -125,15 +153,9 @@ public class FileSharingActivity extends AppCompatActivity {
         }
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(serviceBroadcastReceiver);
-    }
-
     private FileInformation getFileInformation(Uri uri) {
         FileInformation fileInformation = new FileInformation();
+        fileInformation.setUri(uri);
         try (Cursor cursor = getContentResolver().query(uri, null, null, null, null, null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 fileInformation.setName(cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)));
