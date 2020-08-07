@@ -38,6 +38,10 @@ public class FileInformationFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    public String getFilename() {
+        return nameEditText.getText().toString();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
