@@ -48,6 +48,11 @@
             app:layout_constraintBottom_toTopOf="@+id/connect_button"
             app:layout_constraintEnd_toEndOf="parent">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/computer_ip_text_input_placeholder" />
+
             <EditText
                 android:id="@+id/computer_ip_text_input"
                 android:layout_width="match_parent"
@@ -59,11 +64,6 @@
                 android:textColorHighlight="@color/colorPrimary"
                 android:textColorHint="?android:attr/textColorPrimary"
                 android:textColorLink="@color/colorPrimary" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/computer_ip_text_input_placeholder" />
         </LinearLayout>
 
 
