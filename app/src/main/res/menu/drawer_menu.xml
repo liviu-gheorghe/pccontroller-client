@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/drawer_action_remote_control"
+            android:icon="@drawable/ic_drawer_remote_control"
+            android:title="@string/drawer_action_remote_control" />
+
+        <item
+            android:id="@+id/drawer_action_file_sharing"
+            android:icon="@drawable/ic_drawer_file_sharing"
+            android:title="@string/drawer_action_file_sharing" />
+
+        <item
+            android:id="@+id/drawer_action_link_sharing"
+            android:icon="@drawable/ic_drawer_share_link"
+            android:title="@string/drawer_action_link_sharing" />
+        <item
+            android:id="@+id/drawer_action_touchpad"
+            android:icon="@drawable/ic_drawer_touchpad"
+            android:title="@string/drawer_action_touchpad" />
+        <item
+            android:id="@+id/drawer_action_settings"
+            android:icon="@drawable/ic_drawer_settings"
+            android:title="@string/drawer_action_settings" />
+    </group>
+
+    <item android:title="@string/drawer_section_title_more">
+        <menu>
+            <item
+                android:id="@+id/drawer_action_feedback"
+                android:icon="@drawable/ic_drawer_feedback"
+                android:title="@string/drawer_action_help_and_feedback" />
+            <item
+                android:id="@+id/drawer_action_about"
+                android:icon="@drawable/ic_drawer_about"
+                android:title="@string/drawer_action_about" />
+        </menu>
+    </item>
+</menu>
