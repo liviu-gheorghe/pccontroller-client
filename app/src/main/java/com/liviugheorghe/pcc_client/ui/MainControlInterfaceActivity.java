@@ -40,7 +40,7 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction() == null) return;
             if (intent.getAction().equals(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY) && isInForeground) {
-                Intent i = new Intent(MainControlInterfaceActivity.this, LauncherActivity.class);
+                Intent i = new Intent(MainControlInterfaceActivity.this, MainActivity.class);
                 startActivity(i);
                 finish();
             }
@@ -57,13 +57,19 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
         }
     }
 
+    private void setToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_control_interface);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setToolbar();
 
         registerReceiver(serviceBroadcastReceiver, new IntentFilter(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
         //String hostname = getIntent().getStringExtra(App.TARGET_HOSTNAME);
