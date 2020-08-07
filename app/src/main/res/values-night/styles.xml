@@ -7,6 +7,7 @@
         <item name="titleTextColor">@color/colorWhite</item>
         <item name="android:colorBackground">@color/colorDark</item>
         <item name="primaryButtonTextColor">@color/colorWhite</item>
+        <item name="android:textColorPrimaryInverse">@color/colorWhite</item>
         <!--item name="android:textColorPrimary">@color/colorWhite</item -->
         <!-- item name="android:textColorSecondary">@color/colorWhite</item -->
         <item name="colorAccent">@color/colorAccent</item>
@@ -21,6 +22,7 @@
         <item name="titleTextColor">@color/colorWhite</item>
         <item name="android:colorBackground">@color/colorDark</item>
         <item name="primaryButtonTextColor">@color/colorWhite</item>
+        <item name="android:textColorPrimaryInverse">@color/colorWhite</item>
         <!--item name="android:textColorPrimary">@color/colorWhite</item -->
         <!-- item name="android:textColorSecondary">@color/colorWhite</item -->
         <item name="colorAccent">@color/colorAccent</item>
@@ -29,5 +31,10 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.DayNight.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.DayNight" />
+
+    <style name="AppTheme.SplashScreenStyle" parent="Theme.AppCompat.DayNight">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:colorBackground">@color/colorDark</item>
+    </style>
 
 </resources>

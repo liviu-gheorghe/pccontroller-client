@@ -5,4 +5,5 @@
     <dimen name="main_activity_laptop_image_padding">10dp</dimen>
     <dimen name="main_activity_scan_image_padding">30dp</dimen>
     <dimen name="scan_qr_code_info_vertical_padding">20dp</dimen>
+    <dimen name="drawer_header_height">160dp</dimen>
 </resources>
