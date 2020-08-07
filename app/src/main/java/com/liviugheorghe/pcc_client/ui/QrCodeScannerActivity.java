@@ -62,7 +62,7 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
 
         String targetIpAddress = scanResult.split(",")[0];
         String targetHostName = scanResult.split(",")[1];
-
+        App.CONNECTED_DEVICE_HOSTNAME = targetHostName;
         Intent resultIntent = new Intent();
         resultIntent.putExtra(App.EXTRA_TARGET_IP_ADDRESS, targetIpAddress);
         resultIntent.putExtra(App.EXTRA_TARGET_HOSTNAME, targetHostName);
