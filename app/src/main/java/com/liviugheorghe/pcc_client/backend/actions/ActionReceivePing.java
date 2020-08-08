@@ -37,7 +37,7 @@ public class ActionReceivePing implements Action {
 		Notification notification = new NotificationCompat.Builder(App.getAppContext(), App.BACKGROUND_SERVICE_CHANNEL_ID)
 				.setContentTitle("")
 				.setContentText("Ping!")
-				.setSmallIcon(R.drawable.ic_android_black_24dp)
+				.setSmallIcon(R.drawable.ic_notification)
 				.setContentIntent(pendingIntent)
 				.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL;

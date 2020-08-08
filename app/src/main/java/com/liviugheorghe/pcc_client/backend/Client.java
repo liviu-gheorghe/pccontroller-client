@@ -99,7 +99,7 @@ public class Client extends Service {
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, 0);
 		return new NotificationCompat.Builder(this, channelID)
 				.setContentText(text)
-				.setSmallIcon(R.drawable.ic_android_black_24dp)
+				.setSmallIcon(R.drawable.ic_notification)
 				.setContentIntent(pendingIntent)
 				.build();
 	}

@@ -89,7 +89,7 @@ public class Connection extends Service {
 
     private void onConnectionAccepted() {
         Notification notification = createServiceNotification(
-                String.format("%s %s", getResources().getString(R.string.connection_service_notification_text), App.EXTRA_TARGET_HOSTNAME),
+                String.format("%s %s", getResources().getString(R.string.connection_service_notification_text), App.CONNECTED_DEVICE_HOSTNAME),
                 App.BACKGROUND_SERVICE_CHANNEL_ID
         );
         startForeground(2, notification);
@@ -196,7 +196,7 @@ public class Connection extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
         return new NotificationCompat.Builder(this, channelID)
                 .setContentText(text)
-                .setSmallIcon(R.drawable.ic_android_black_24dp)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setContentIntent(pendingIntent)
                 .build();
     }
