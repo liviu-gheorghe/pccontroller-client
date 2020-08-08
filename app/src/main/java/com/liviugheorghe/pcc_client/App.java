@@ -10,6 +10,8 @@ import android.os.Build;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.NotificationManagerCompat;
 
+import java.lang.ref.WeakReference;
+
 public class App extends Application {
 
 
@@ -27,10 +29,10 @@ public class App extends Application {
     public static boolean CONNECTION_ALIVE = false;
     public static String CONNECTED_DEVICE_HOSTNAME = "";
     public static String CONNECTED_DEVICE_IP_ADDRESS = null;
-    private static Context context;
+    private static WeakReference<Context> context;
 
     public static Context getAppContext() {
-        return context;
+        return context.get();
     }
 
     @Override
@@ -44,7 +46,7 @@ public class App extends Application {
                 "PC Controller File Sharing Service Notification Channel",
                 NotificationManagerCompat.IMPORTANCE_HIGH
         );
-        App.context = getApplicationContext();
+        context = new WeakReference<>(this);
     }
     
     @Override

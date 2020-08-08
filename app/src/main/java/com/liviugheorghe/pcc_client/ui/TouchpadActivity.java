@@ -36,7 +36,7 @@ public class TouchpadActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction() == null) return;
             if (intent.getAction().equals(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY)) {
-                Intent i = new Intent(TouchpadActivity.this, LauncherActivity.class);
+                Intent i = new Intent(TouchpadActivity.this, MainActivity.class);
                 startActivity(i);
                 finish();
             }
@@ -89,14 +89,19 @@ public class TouchpadActivity extends AppCompatActivity {
         }
     }
 
+    private void setToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_touchpad);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setToolbar();
         textBox = findViewById(R.id.text_box);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         addTextBoxInputListener();
         registerReceiver(serviceBroadcastReceiver, new IntentFilter(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
@@ -133,14 +138,16 @@ public class TouchpadActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(serviceConnection);
+        if (serviceConnection != null)
+            unbindService(serviceConnection);
         unregisterReceiver(serviceBroadcastReceiver);
     }
 
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        this.gestureDetector.onTouchEvent(event);
+        if (gestureDetector != null)
+            this.gestureDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
 

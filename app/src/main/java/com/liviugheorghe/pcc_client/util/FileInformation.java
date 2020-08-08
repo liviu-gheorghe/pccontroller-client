@@ -4,6 +4,9 @@ import android.net.Uri;
 
 import androidx.core.util.Pair;
 
+import com.liviugheorghe.pcc_client.App;
+import com.liviugheorghe.pcc_client.R;
+
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
@@ -12,7 +15,7 @@ public class FileInformation {
     private Uri uri;
     private String name;
     private String size;
-    private String type = "";
+    private String type = App.getAppContext().getResources().getString(R.string.unknown_value_text);
 
 
     public FileInformation(Uri uri, String name, String size, String type) {
@@ -63,7 +66,7 @@ public class FileInformation {
     }
 
     public Pair<Double, String> getHumanReadableSize() throws NumberFormatException {
-        DecimalFormat decimalFormat = new DecimalFormat("#.###");
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
         decimalFormat.setRoundingMode(RoundingMode.CEILING);
         double numberOfBytes;
         try {

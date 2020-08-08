@@ -12,7 +12,7 @@ import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.R;
 import com.liviugheorghe.pcc_client.backend.Action;
 import com.liviugheorghe.pcc_client.backend.ReceivedActionsCodes;
-import com.liviugheorghe.pcc_client.ui.LauncherActivity;
+import com.liviugheorghe.pcc_client.ui.MainActivity;
 
 public class ActionReceivePing implements Action {
 	
@@ -29,7 +29,7 @@ public class ActionReceivePing implements Action {
 
     private void createPingNotification() {
         Intent notificationIntent = new Intent(
-                App.getAppContext(), LauncherActivity.class
+                App.getAppContext(), MainActivity.class
         );
 		PendingIntent pendingIntent = PendingIntent.getActivity(
 				App.getAppContext(), 0, notificationIntent, 0

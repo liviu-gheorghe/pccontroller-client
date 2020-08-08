@@ -40,14 +40,22 @@ public class LinkSharingActivity extends AppCompatActivity {
     };
     private ServiceConnection serviceConnection;
 
+
+    private void setToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_link_sharing);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setToolbar();
 
         registerReceiver(serviceBroadcastReceiver, new IntentFilter(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
         button = findViewById(R.id.link_sharing_button);
@@ -86,7 +94,7 @@ public class LinkSharingActivity extends AppCompatActivity {
               }
             }
             else {
-                Intent intent = new Intent(LinkSharingActivity.this, LauncherActivity.class);
+                Intent intent = new Intent(LinkSharingActivity.this, MainActivity.class);
                 startActivity(intent);
             }
             finish();
@@ -110,6 +118,7 @@ public class LinkSharingActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(serviceBroadcastReceiver);
-        unbindService(serviceConnection);
+        if (serviceConnection != null)
+            unbindService(serviceConnection);
     }
 }

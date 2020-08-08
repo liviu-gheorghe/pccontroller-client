@@ -21,7 +21,7 @@
     </string>
     <string name="wait_for_permission_info">Accepta conexiunea de pe PC-ul tau</string>
     <string name="todo">TODO</string>
-    <string name="computer_ip_text_input_placeholder">Adresa IP a computerului</string>
+    <string name="computer_ip_text_input_placeholder">Adresa IP</string>
     <string name="scan_qr_code_info">sau scaneaza codul QR din aplicatie</string>
     <string name="close_connection_button_text">Inchide conexiunea</string>
     <string name="file_sharing_activity_title">Paratajeaza fisierul</string>
@@ -36,7 +36,7 @@
     <string name="send_link_button_text">Trimitere link</string>
     <string name="invalid_file_toast_text">Fisier invalid</string>
     <string name="invalid_link_toast_text">Link Invalid</string>
-    <string name="no_file_selected_text">Niciun ifisier selectat</string>
+    <string name="no_file_selected_text">Niciun fisier selectat</string>
     <string name="selected_file_name_text">Nume</string>
     <string name="selected_file_type_text">Tip</string>
     <string name="selected_file_size_text">Dimensiune</string>
@@ -47,4 +47,14 @@
     <string name="activity_main_control_interface_menu_action_disconnect">Deconectare</string>
     <string name="activity_touchpad_action_keyboard">Tastatura</string>
     <string name="activity_touchpad_action_keyboard_voice">Vorbire</string>
+    <string name="open_drawer_content_description">Deschidere</string>
+    <string name="close_drawer_content_description">Inchidere</string>
+    <string name="drawer_action_remote_control">Control remote</string>
+    <string name="drawer_action_file_sharing">Partajare fisier</string>
+    <string name="drawer_action_link_sharing">Partajare link</string>
+    <string name="drawer_action_settings">Setari</string>
+    <string name="drawer_action_help_and_feedback">Ajutor si feedback</string>
+    <string name="drawer_action_about">Despre</string>
+    <string name="drawer_section_title_more">Mai multe</string>
+    <string name="action_close_app">Inchidere aplicatie</string>
 </resources>

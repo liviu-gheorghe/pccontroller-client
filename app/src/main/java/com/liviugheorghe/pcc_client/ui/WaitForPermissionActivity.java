@@ -18,7 +18,7 @@ public class WaitForPermissionActivity extends AppCompatActivity {
 		public void onReceive(Context context, Intent intent) {
 			if (intent.getAction() == null) return;
 			if (intent.getAction().equals(App.BROADCAST_LEAVE_WAIT_FOR_PERMISSION_ACTIVITY)) {
-				Intent i = new Intent(WaitForPermissionActivity.this, LauncherActivity.class);
+				Intent i = new Intent(WaitForPermissionActivity.this, MainControlInterfaceActivity.class);
 				startActivity(i);
 				finish();
 			}

@@ -1,133 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/drawer"
+    android:fitsSystemWindows="true"
     tools:context="com.liviugheorghe.pcc_client.ui.MainActivity">
 
 
-    <FrameLayout
-        android:layout_width="match_parent"
+    <include layout="@layout/app_bar_main_activity" />
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_gravity="start"
+        android:background="?android:attr/colorBackground"
+        android:theme="@style/AppTheme"
+        app:headerLayout="@layout/drawer_header"
+        app:itemIconTint="?android:attr/textColorPrimaryInverse"
+        app:menu="@menu/drawer_menu" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?android:attr/colorBackground"
-            tools:context="com.liviugheorghe.pcc_client.ui.MainActivity">
-
-
-            <Button
-                android:id="@+id/connect_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:onClick="connectButtonClick"
-                android:text="@string/ec_button_text"
-                android:textColor="?attr/primaryButtonTextColor"
-                app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-
-            <EditText
-                android:id="@+id/computer_ip_text_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/computer_ip_text_input_placeholder"
-                android:inputType="text"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textColorHighlight="@color/colorPrimary"
-                android:textColorHint="?android:attr/textColorPrimary"
-                android:textColorLink="@color/colorPrimary"
-                app:layout_constraintBottom_toTopOf="@+id/connect_button"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/main_activity_laptop_image_padding"
-                android:paddingBottom="@dimen/main_activity_laptop_image_padding"
-                app:layout_constraintBottom_toTopOf="@+id/computer_ip_text_input"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView"
-                app:srcCompat="@drawable/ic_laptop_mac_orange_100dp" />
-
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingTop="10sp"
-                android:paddingBottom="10sp"
-                android:text="@string/ts_activity_title"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <ImageButton
-                    android:id="@+id/start_scan_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorTransparent"
-                    android:onClick="startScanButtonClick"
-                    android:padding="@dimen/main_activity_scan_image_padding"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_qr_code_icon" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/scan_qr_code_info_vertical_padding"
-                    android:paddingBottom="@dimen/scan_qr_code_info_vertical_padding"
-                    android:text="@string/scan_qr_code_info"
-                    android:textColor="?android:attr/textColorPrimary"
-                    app:layout_constraintBottom_toTopOf="@+id/start_scan_button"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </FrameLayout>
-
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

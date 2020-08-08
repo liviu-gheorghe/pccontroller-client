@@ -42,6 +42,8 @@ public class FileSharingActivity extends AppCompatActivity {
     private FileInformation fileInformation;
     private Drawable connectToADeviceDrawable;
     private Drawable sendFileDrawable;
+    private FileInformationFragment fileInformationFragment;
+
     private final BroadcastReceiver serviceBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -53,9 +55,20 @@ public class FileSharingActivity extends AppCompatActivity {
     };
 
 
+    private String getUpdatedFileNameFromFragment() {
+        try {
+            return fileInformationFragment.getFilename();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     private void setToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void loadFABDrawables() {
@@ -86,16 +99,16 @@ public class FileSharingActivity extends AppCompatActivity {
         if (getIntent().getExtras() == null || getIntent().getExtras().get(EXTRA_STREAM) == null) {
             handleInvalidFile();
         } else {
-            Uri uri;
             if (savedInstanceState != null && savedInstanceState.getString(EXTRA_STREAM) != null)
-                uri = Uri.parse(savedInstanceState.getString(EXTRA_STREAM));
-            else
-                uri = (Uri) getIntent().getExtras().get(EXTRA_STREAM);
-            fileInformation = getFileInformation(uri);
+                fileInformation = getCachedFileInformationFromBundle(savedInstanceState);
+            else {
+                Uri uri = (Uri) getIntent().getExtras().get(EXTRA_STREAM);
+                fileInformation = getFileInformation(uri);
+            }
             if (fileInformation.getName() == null)
                 fileInformation.setName(UUID.randomUUID().toString() + "." + fileInformation.getType());
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            FileInformationFragment fileInformationFragment = new FileInformationFragment(
+            fileInformationFragment = new FileInformationFragment(
                     fileInformation.getName(),
                     fileInformation.getSize(),
                     fileInformation.getType()
@@ -105,7 +118,10 @@ public class FileSharingActivity extends AppCompatActivity {
             button.setOnClickListener(view -> {
                 if (App.CONNECTION_ALIVE) {
                     Intent serviceIntent = new Intent(this, FileConnection.class);
-                    serviceIntent.putExtra(EXTRA_STREAM, uri.toString());
+                    serviceIntent.putExtra(EXTRA_STREAM, fileInformation.getUri().toString());
+                    String updatedFileName = getUpdatedFileNameFromFragment();
+                    if (updatedFileName != null)
+                        fileInformation.setName(updatedFileName);
                     serviceIntent.putExtra(EXTRA_FILE_NAME, fileInformation.getName());
                     serviceIntent.putExtra(EXTRA_FILE_SIZE, fileInformation.getSize());
                     serviceIntent.putExtra(EXTRA_FILE_TYPE, fileInformation.getType());
@@ -114,7 +130,7 @@ public class FileSharingActivity extends AppCompatActivity {
                     } catch (Exception e) {
                     }
                 } else {
-                    Intent intent = new Intent(FileSharingActivity.this, LauncherActivity.class);
+                    Intent intent = new Intent(FileSharingActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
                 finish();
@@ -125,7 +141,14 @@ public class FileSharingActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
+        if (fileInformation == null) return;
+        String updatedFileName = getUpdatedFileNameFromFragment();
+        if (updatedFileName != null)
+            fileInformation.setName(updatedFileName);
         outState.putString(EXTRA_STREAM, fileInformation.getUri().toString());
+        outState.putString(EXTRA_FILE_NAME, fileInformation.getName());
+        outState.putString(EXTRA_FILE_SIZE, fileInformation.getSize());
+        outState.putString(EXTRA_FILE_TYPE, fileInformation.getType());
         super.onSaveInstanceState(outState);
     }
 
@@ -151,6 +174,15 @@ public class FileSharingActivity extends AppCompatActivity {
             button.setImageDrawable(connectToADeviceDrawable);
             textView.setText(R.string.device_not_connected_text);
         }
+    }
+
+    private FileInformation getCachedFileInformationFromBundle(Bundle savedInstanceState) {
+        return new FileInformation(
+                Uri.parse(savedInstanceState.getString(EXTRA_STREAM)),
+                savedInstanceState.getString(EXTRA_FILE_NAME),
+                savedInstanceState.getString(EXTRA_FILE_SIZE),
+                savedInstanceState.getString(EXTRA_FILE_TYPE)
+        );
     }
 
     private FileInformation getFileInformation(Uri uri) {

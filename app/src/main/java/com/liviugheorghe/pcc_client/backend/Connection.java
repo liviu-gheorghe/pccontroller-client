@@ -14,7 +14,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.R;
-import com.liviugheorghe.pcc_client.ui.LauncherActivity;
+import com.liviugheorghe.pcc_client.ui.MainControlInterfaceActivity;
 import com.liviugheorghe.pcc_client.ui.WaitForPermissionActivity;
 
 import java.io.DataInputStream;
@@ -89,7 +89,7 @@ public class Connection extends Service {
 
     private void onConnectionAccepted() {
         Notification notification = createServiceNotification(
-                String.format("%s %s", getResources().getString(R.string.connection_service_notification_text), targetIpAddress),
+                String.format("%s %s", getResources().getString(R.string.connection_service_notification_text), App.EXTRA_TARGET_HOSTNAME),
                 App.BACKGROUND_SERVICE_CHANNEL_ID
         );
         startForeground(2, notification);
@@ -121,6 +121,8 @@ public class Connection extends Service {
 
     public void onDestroy() {
         super.onDestroy();
+        sendBroadcast(new Intent(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
+        sendBroadcast(new Intent(App.BROADCAST_LEAVE_WAIT_FOR_PERMISSION_ACTIVITY));
         App.CONNECTION_ALIVE = false;
         try {
             socket.close();
@@ -190,7 +192,7 @@ public class Connection extends Service {
     }
     
     private Notification createServiceNotification(String text, String channelID) {
-        Intent notificationIntent = new Intent(this, LauncherActivity.class);
+        Intent notificationIntent = new Intent(this, MainControlInterfaceActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
         return new NotificationCompat.Builder(this, channelID)
                 .setContentText(text)
