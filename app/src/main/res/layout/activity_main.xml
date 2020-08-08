@@ -10,6 +10,9 @@
     android:fitsSystemWindows="true"
     tools:context="com.liviugheorghe.pcc_client.ui.MainActivity">
 
+
+    <include layout="@layout/app_bar_main_activity" />
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
@@ -20,7 +23,5 @@
         app:headerLayout="@layout/drawer_header"
         app:itemIconTint="?android:attr/textColorPrimaryInverse"
         app:menu="@menu/drawer_menu" />
-
-    <include layout="@layout/app_bar_main_activity" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
