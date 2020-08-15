@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GestureDetectorCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.R;
@@ -104,7 +105,7 @@ public class TouchpadActivity extends AppCompatActivity {
         textBox = findViewById(R.id.text_box);
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         addTextBoxInputListener();
-        registerReceiver(serviceBroadcastReceiver, new IntentFilter(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
+        LocalBroadcastManager.getInstance(this).registerReceiver(serviceBroadcastReceiver, new IntentFilter(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
         serviceConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder service) {
@@ -140,7 +141,7 @@ public class TouchpadActivity extends AppCompatActivity {
         super.onDestroy();
         if (serviceConnection != null)
             unbindService(serviceConnection);
-        unregisterReceiver(serviceBroadcastReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(serviceBroadcastReceiver);
     }
 
 

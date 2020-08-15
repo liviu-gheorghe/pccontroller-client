@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.R;
@@ -57,7 +58,7 @@ public class LinkSharingActivity extends AppCompatActivity {
 
         setToolbar();
 
-        registerReceiver(serviceBroadcastReceiver, new IntentFilter(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
+        LocalBroadcastManager.getInstance(this).registerReceiver(serviceBroadcastReceiver, new IntentFilter(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
         button = findViewById(R.id.link_sharing_button);
         textView = findViewById(R.id.link_sharing_text);
 
@@ -117,7 +118,7 @@ public class LinkSharingActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(serviceBroadcastReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(serviceBroadcastReceiver);
         if (serviceConnection != null)
             unbindService(serviceConnection);
     }
