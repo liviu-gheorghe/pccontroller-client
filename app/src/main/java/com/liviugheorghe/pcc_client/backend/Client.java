@@ -79,8 +79,8 @@ public class Client extends Service {
 	}
 
 	public void closeConnection() {
-		sendBroadcast(new Intent(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
-		sendBroadcast(new Intent(App.BROADCAST_LEAVE_WAIT_FOR_PERMISSION_ACTIVITY));
+/*		LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
+		LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(App.BROADCAST_LEAVE_WAIT_FOR_PERMISSION_ACTIVITY));*/
 		try {
 			connection.stopSelf();
 		} catch (Exception e) {
