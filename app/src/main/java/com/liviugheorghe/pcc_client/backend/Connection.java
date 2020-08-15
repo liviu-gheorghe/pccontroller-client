@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.R;
@@ -89,13 +90,13 @@ public class Connection extends Service {
 
     private void onConnectionAccepted() {
         Notification notification = createServiceNotification(
-                String.format("%s %s", getResources().getString(R.string.connection_service_notification_text), App.EXTRA_TARGET_HOSTNAME),
+                String.format("%s %s", getResources().getString(R.string.connection_service_notification_text), App.CONNECTED_DEVICE_HOSTNAME),
                 App.BACKGROUND_SERVICE_CHANNEL_ID
         );
         startForeground(2, notification);
         App.CONNECTION_ALIVE = true;
         App.CONNECTED_DEVICE_IP_ADDRESS = targetIpAddress;
-        sendBroadcast(new Intent(App.BROADCAST_LEAVE_WAIT_FOR_PERMISSION_ACTIVITY));
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(App.BROADCAST_LEAVE_WAIT_FOR_PERMISSION_ACTIVITY));
     }
 
     private void createSocket(String host,int port) throws IOException {
@@ -121,8 +122,10 @@ public class Connection extends Service {
 
     public void onDestroy() {
         super.onDestroy();
-        sendBroadcast(new Intent(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
-        sendBroadcast(new Intent(App.BROADCAST_LEAVE_WAIT_FOR_PERMISSION_ACTIVITY));
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
+        Intent i = new Intent(App.BROADCAST_LEAVE_WAIT_FOR_PERMISSION_ACTIVITY);
+        i.putExtra("WHERE","MAIN_ACTIVITY");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(i);
         App.CONNECTION_ALIVE = false;
         try {
             socket.close();
@@ -163,7 +166,9 @@ public class Connection extends Service {
             }
             else if(type == ReceivedActionsCodes.RECEIVE_CONNECTION_REJECTION)
             {
-                sendBroadcast(new Intent(App.BROADCAST_LEAVE_WAIT_FOR_PERMISSION_ACTIVITY));
+                Intent intent = new Intent(App.BROADCAST_LEAVE_WAIT_FOR_PERMISSION_ACTIVITY);
+                intent.putExtra("WHERE","MAIN_ACTIVITY");
+                LocalBroadcastManager.getInstance(Connection.this).sendBroadcast(intent);
             }
             else {
                 Action action = ActionFactory.createAction(type, content);
@@ -196,7 +201,7 @@ public class Connection extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
         return new NotificationCompat.Builder(this, channelID)
                 .setContentText(text)
-                .setSmallIcon(R.drawable.ic_android_black_24dp)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setContentIntent(pendingIntent)
                 .build();
     }

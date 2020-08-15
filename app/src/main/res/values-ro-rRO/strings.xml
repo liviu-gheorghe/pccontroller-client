@@ -22,7 +22,7 @@
     <string name="wait_for_permission_info">Accepta conexiunea de pe PC-ul tau</string>
     <string name="todo">TODO</string>
     <string name="computer_ip_text_input_placeholder">Adresa IP</string>
-    <string name="scan_qr_code_info">sau scaneaza codul QR din aplicatie</string>
+    <string name="scan_qr_code_info">Scaneaza codul QR din aplicatie</string>
     <string name="close_connection_button_text">Inchide conexiunea</string>
     <string name="file_sharing_activity_title">Paratajeaza fisierul</string>
     <string name="invalid_ip_address_toast_text">Adresa IP este invalida</string>
@@ -57,4 +57,8 @@
     <string name="drawer_action_about">Despre</string>
     <string name="drawer_section_title_more">Mai multe</string>
     <string name="action_close_app">Inchidere aplicatie</string>
+    <string name="action_connect_using_ip">Conectare cu adresa IP</string>
+    <string name="connect_using_ip_dialog_title">Conectare cu IP</string>
+    <string name="connect_using_ip_dialog_ok">OK</string>
+    <string name="connect_using_ip_dialog_cancel">Anulare</string>
 </resources>

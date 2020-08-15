@@ -19,6 +19,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.R;
@@ -35,17 +36,17 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
     private ServiceConnection serviceConnection;
     private boolean isInForeground = false;
 
-    private final BroadcastReceiver serviceBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction() == null) return;
-            if (intent.getAction().equals(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY) && isInForeground) {
-                Intent i = new Intent(MainControlInterfaceActivity.this, MainActivity.class);
-                startActivity(i);
-                finish();
+        private final BroadcastReceiver serviceBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction() == null) return;
+                if (intent.getAction().equals(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY) && isInForeground) {
+                    Intent i = new Intent(MainControlInterfaceActivity.this, MainActivity.class);
+                    startActivity(i);
+                    finish();
+                }
             }
-        }
-    };
+        };
 
 
     private String getViewId(View view) {
@@ -71,7 +72,7 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
 
         setToolbar();
 
-        registerReceiver(serviceBroadcastReceiver, new IntentFilter(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
+        LocalBroadcastManager.getInstance(this).registerReceiver(serviceBroadcastReceiver, new IntentFilter(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
         //String hostname = getIntent().getStringExtra(App.TARGET_HOSTNAME);
         TextView hostnameTextView = findViewById(R.id.hostname);
         hostnameTextView.setText(App.CONNECTED_DEVICE_HOSTNAME);
@@ -136,7 +137,7 @@ public class MainControlInterfaceActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(serviceBroadcastReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(serviceBroadcastReceiver);
         unbindService(serviceConnection);
     }
 

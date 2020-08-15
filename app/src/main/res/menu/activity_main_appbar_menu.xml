@@ -5,6 +5,12 @@
     tools:context="com.liviugheorghe.pcc_client.ui.MainActivity">
 
     <item
+        android:id="@+id/action_connect_using_ip"
+        android:onClick="connectUsingIpMenuItemClick"
+        android:title="@string/action_connect_using_ip"
+        app:showAsAction="never"/>
+
+    <item
         android:onClick="closeAppMenuItemClick"
         android:title="@string/action_close_app"
         app:showAsAction="never" />

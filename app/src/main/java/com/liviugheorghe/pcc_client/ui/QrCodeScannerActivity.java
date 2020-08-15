@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.Log;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -62,7 +63,14 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
 
         String targetIpAddress = scanResult.split(",")[0];
         String targetHostName = scanResult.split(",")[1];
+        String targetOs = "";
+        try {
+            targetOs = scanResult.split(",")[2];
+        } catch(IndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
         App.CONNECTED_DEVICE_HOSTNAME = targetHostName;
+        App.CONNECTED_DEVICE_OS = targetOs;
         Intent resultIntent = new Intent();
         resultIntent.putExtra(App.EXTRA_TARGET_IP_ADDRESS, targetIpAddress);
         resultIntent.putExtra(App.EXTRA_TARGET_HOSTNAME, targetHostName);
@@ -73,7 +81,7 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
     private boolean isValidQrCode(String text) {
         if (text == null) return false;
         String[] params = text.split(",");
-        if (params.length != 2) return false;
+        if (params.length < 2) return false;
         if (!IpAddressValidator.isLocalIpAddress(params[0])) return false;
         return params[1].length() != 0;
     }
