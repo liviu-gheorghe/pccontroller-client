@@ -28,6 +28,7 @@ public class App extends Application {
     public final static int FILE_SERVER_PORT = 8561;
     public static boolean CONNECTION_ALIVE = false;
     public static String CONNECTED_DEVICE_HOSTNAME = "";
+    public static String CONNECTED_DEVICE_OS = "";
     public static String CONNECTED_DEVICE_IP_ADDRESS = null;
     private static WeakReference<Context> context;
 
