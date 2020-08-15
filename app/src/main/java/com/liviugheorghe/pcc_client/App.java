@@ -5,6 +5,7 @@ import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 
 import androidx.appcompat.app.AppCompatDelegate;
@@ -22,8 +23,8 @@ public class App extends Application {
     public static final String EXTRA_FILE_SIZE = "EXTRA_FILE_SIZE";
     public static final String EXTRA_FILE_TYPE = "EXTRA_FILE_TYPE";
     public static final String EXTRA_TARGET_HOSTNAME = "TARGET_HOSTNAME";
-    public static final String BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY = "LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY";
-    public static final String BROADCAST_LEAVE_WAIT_FOR_PERMISSION_ACTIVITY = "LEAVE_WAIT_FOR_PERMISSION_ACTIVITY";
+    public static final String BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY = "com.liviugheorghe.pcc_client.LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY";
+    public static final String BROADCAST_LEAVE_WAIT_FOR_PERMISSION_ACTIVITY = "com.liviugheorghe.pcc_client.LEAVE_WAIT_FOR_PERMISSION_ACTIVITY";
     public final static int SERVER_PORT = 8560;
     public final static int FILE_SERVER_PORT = 8561;
     public static boolean CONNECTION_ALIVE = false;
