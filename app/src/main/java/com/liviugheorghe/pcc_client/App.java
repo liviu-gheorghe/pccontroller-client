@@ -5,17 +5,19 @@ import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.preference.PreferenceManager;
 
 import java.lang.ref.WeakReference;
 
 public class App extends Application {
 
-
+    public static final String SHARED_PREF_UI_MODE = "ui_mode";
+    public static final String SHARED_PREF_TOUCHPAD_SENSITIVITY = "touchpad_sensitivity";
     public static final String BACKGROUND_SERVICE_CHANNEL_ID = "backgroundServiceChannel";
     public static final String FILE_SHARING_SERVICE_CHANNEL_ID = "fileSharingServiceChannel";
     public static final String EXTRA_TARGET_IP_ADDRESS = "TARGET_IP_ADDRESS";
@@ -32,6 +34,7 @@ public class App extends Application {
     public static String CONNECTED_DEVICE_OS = "";
     public static String CONNECTED_DEVICE_IP_ADDRESS = null;
     private static WeakReference<Context> context;
+    private static TouchpadParams touchpadParams;
 
     public static Context getAppContext() {
         return context.get();
@@ -41,7 +44,10 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String mode = preferences.getString(SHARED_PREF_UI_MODE,"MODE_NIGHT_YES");
+        modifyUITheme(mode);
         createNotificationChannel(BACKGROUND_SERVICE_CHANNEL_ID, "Pc Controller Background Service Notification Channel");
         createNotificationChannel(
                 FILE_SHARING_SERVICE_CHANNEL_ID,
@@ -49,16 +55,30 @@ public class App extends Application {
                 NotificationManagerCompat.IMPORTANCE_HIGH
         );
         context = new WeakReference<>(this);
+        int sensitivity = Integer.parseInt(preferences.getString(SHARED_PREF_TOUCHPAD_SENSITIVITY,String.valueOf(TouchpadParams.HIGH_SENSITIVITY)));
+        touchpadParams = new TouchpadParams(sensitivity);
+    }
+
+    private static int getModeFromString(String s) {
+        if(s.equals("MODE_NIGHT_NO")) return AppCompatDelegate.MODE_NIGHT_NO;
+        if(s.equals("MODE_NIGHT_AUTO_BATTERY")) return AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY;
+        if(s.equals("MODE_NIGHT_FOLLOW_SYSTEM")) return AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+        return AppCompatDelegate.MODE_NIGHT_YES;
     }
     
     @Override
     public Object getSystemService(String name) {
         return super.getSystemService(name);
     }
+
+    public static void modifyUITheme(String s) {
+        int mode = getModeFromString(s);
+        AppCompatDelegate.setDefaultNightMode(mode);
+    }
     
     
     private void createNotificationChannel(String channelID, String description, int... args) {
-        int importance = (args.length > 0) ? args[0] : NotificationManagerCompat.IMPORTANCE_DEFAULT;
+        int importance = (args.length > 0) ? args[0] : NotificationManagerCompat.IMPORTANCE_LOW;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(
                     channelID,
@@ -66,11 +86,32 @@ public class App extends Application {
                     importance
             );
             NotificationManager manager = getSystemService(NotificationManager.class);
-            try {
-                manager.createNotificationChannel(notificationChannel);
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-            }
+            if(manager != null)
+            manager.createNotificationChannel(notificationChannel);
+        }
+    }
+
+    public static TouchpadParams getTouchpadParams() {
+        return touchpadParams;
+    }
+
+    public static final class TouchpadParams {
+        private int sensitivity = MEDIUM_SENSITIVITY;
+        public static int LOW_SENSITIVITY = 100;
+        public static int MEDIUM_SENSITIVITY = 200;
+        public static int HIGH_SENSITIVITY = 300;
+
+        public TouchpadParams(int sensitivity) {
+            this.sensitivity = sensitivity;
+        }
+
+        public TouchpadParams() {}
+
+        public int getSensitivity() {
+            return sensitivity;
+        }
+        public void setSensitivity(int sensitivity) {
+            this.sensitivity = sensitivity;
         }
     }
 }

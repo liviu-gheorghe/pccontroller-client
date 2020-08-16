@@ -5,6 +5,7 @@ import android.view.MotionEvent;
 
 import androidx.annotation.NonNull;
 
+import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.backend.Client;
 import com.liviugheorghe.pcc_client.backend.DispatchedActionsCodes;
 
@@ -14,6 +15,7 @@ class GestureListener extends GestureDetector.SimpleOnGestureListener {
     public static final int MIDDLE_CLICK = 2;
     public static final int RIGHT_CLICK = 3;
     public static final int DOUBLE_CLICK = 4;
+    private App.TouchpadParams tParams;
 
     private Client clientService;
     private float currentMoveX = -1;
@@ -21,6 +23,7 @@ class GestureListener extends GestureDetector.SimpleOnGestureListener {
 
     public GestureListener(Client clientService) {
         this.clientService = clientService;
+        tParams = App.getTouchpadParams();
     }
 
     @Override
@@ -87,7 +90,6 @@ class GestureListener extends GestureDetector.SimpleOnGestureListener {
         if (Math.abs(accumulatedDistanceToMoveX) > minimumDistanceToMoveX) {
             currentMoveX = x;
             delta = new DeltaInfo((int) accumulatedDistanceToMoveX, 0);
-            accumulatedDistanceToMoveX = 0;
         }
         float accumulatedDistanceToMoveY = -distanceY;
         float minimumDistanceToMoveY = 2;
@@ -95,7 +97,6 @@ class GestureListener extends GestureDetector.SimpleOnGestureListener {
             currentMoveY = y;
             if (delta == null) delta = new DeltaInfo(0, (int) accumulatedDistanceToMoveY);
             else delta.y = (int) accumulatedDistanceToMoveY;
-            accumulatedDistanceToMoveY = 0;
         }
         if (delta != null) {
             try {
@@ -110,13 +111,13 @@ class GestureListener extends GestureDetector.SimpleOnGestureListener {
         return true;
     }
 
-    private static class DeltaInfo {
+    private class DeltaInfo {
         private int x;
         private int y;
 
         DeltaInfo(int x, int y) {
-            this.x = x;
-            this.y = y;
+            this.x = x*((400-tParams.getSensitivity())/100);
+            this.y = y*((400-tParams.getSensitivity())/100);
         }
 
         @NonNull

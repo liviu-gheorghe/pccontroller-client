@@ -225,6 +225,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.drawer_action_touchpad:
                 if (checkIfDeviceIsConnectedBeforeOpeningActivity())
                     startActivity(new Intent(this, TouchpadActivity.class));
+                break;
+            case R.id.drawer_action_settings:
+                startActivity(new Intent(this,SettingsActivity.class));
+                break;
             default:
                 return false;
         }

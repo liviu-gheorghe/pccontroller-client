@@ -1,0 +1,38 @@
+<resources>
+    <!-- Reply Preference -->
+    <string-array name="reply_entries">
+        <item>Reply</item>
+        <item>Reply to all</item>
+    </string-array>
+
+    <string-array name="reply_values">
+        <item>reply</item>
+        <item>reply_all</item>
+    </string-array>
+
+    <string-array name="ui_mode_entries">
+        <item>Dark</item>
+        <item>Light</item>
+        <item>Set by battery saver</item>
+        <item>Use system default</item>
+    </string-array>
+
+    <string-array name="ui_mode_values">
+        <item>MODE_NIGHT_YES</item>
+        <item>MODE_NIGHT_NO</item>
+        <item>MODE_NIGHT_AUTO_BATTERY</item>
+        <item>MODE_NIGHT_FOLLOW_SYSTEM</item>
+    </string-array>
+
+    <string-array name="touchpad_sensitivity_entries">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+    </string-array>
+
+    <string-array name="touchpad_sensitivity_values">
+        <item>100</item>
+        <item>200</item>
+        <item>300</item>
+    </string-array>
+</resources>
