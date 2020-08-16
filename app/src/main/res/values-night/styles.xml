@@ -27,8 +27,4 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.DayNight" />
 
-    <style name="AppTheme.SplashScreenStyle" parent="Theme.AppCompat.DayNight">
-        <item name="android:windowBackground">@drawable/splash_background</item>
-        <item name="android:colorBackground">@color/colorDark</item>
-    </style>
 </resources>

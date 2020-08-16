@@ -124,7 +124,7 @@ public class FileSharingActivity extends AppCompatActivity {
 
     private void loadFABDrawables() {
         addFileDrawable = ContextCompat.getDrawable(this, R.drawable.ic_add);
-        sendFileDrawable = ContextCompat.getDrawable(this, R.drawable.ic_icon_send);
+        sendFileDrawable = ContextCompat.getDrawable(this, R.drawable.ic_send);
     }
 
     private void handleInvalidFile() {
