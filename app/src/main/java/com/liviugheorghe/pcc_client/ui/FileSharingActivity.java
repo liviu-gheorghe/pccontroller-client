@@ -9,7 +9,7 @@ import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.OpenableColumns;
+import android.provider.OpenableColumns;;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
@@ -37,7 +37,6 @@ import static com.liviugheorghe.pcc_client.App.EXTRA_FILE_TYPE;
 
 public class FileSharingActivity extends AppCompatActivity {
 
-    private final String TAG = this.getClass().getSimpleName();
     private FloatingActionButton button;
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private FileInformation fileInformation;
@@ -67,6 +66,7 @@ public class FileSharingActivity extends AppCompatActivity {
             serviceIntent.putExtra(EXTRA_FILE_NAME, fileInformation.getName());
             serviceIntent.putExtra(EXTRA_FILE_SIZE, fileInformation.getSize());
             serviceIntent.putExtra(EXTRA_FILE_TYPE, fileInformation.getType());
+            Log.d("File size is",fileInformation.getSize()+ "");
             try {
                 startService(serviceIntent);
             } catch (Exception e) {
@@ -77,7 +77,6 @@ public class FileSharingActivity extends AppCompatActivity {
     }
 
     private void addFile() {
-        Log.d(TAG, "AddFile");
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.setType("*/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -146,7 +145,10 @@ public class FileSharingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_file_sharing);
         setToolbar();
         loadFABDrawables();
-        LocalBroadcastManager.getInstance(this).registerReceiver(serviceBroadcastReceiver, new IntentFilter(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                serviceBroadcastReceiver,
+                new IntentFilter(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY)
+        );
         button = findViewById(R.id.file_sharing_button);
         button.setOnClickListener(view -> {
             if(isFileAdded) {
@@ -235,7 +237,14 @@ public class FileSharingActivity extends AppCompatActivity {
     private FileInformation getFileInformation(Uri uri) {
         FileInformation fileInformation = new FileInformation();
         fileInformation.setUri(uri);
-        try (Cursor cursor = getContentResolver().query(uri, null, null, null, null, null)) {
+        try (Cursor cursor = getContentResolver().query(
+                uri,
+                null,
+                null,
+                null,
+                null,
+                null)
+        ) {
             if (cursor != null && cursor.moveToFirst()) {
                 fileInformation.setName(cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)));
                 int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);

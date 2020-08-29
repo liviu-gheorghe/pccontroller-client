@@ -63,4 +63,9 @@
     <string name="connect_using_ip_dialog_cancel">Anulare</string>
     <string name="title_activity_settings">Setări</string>
     <string name="appearance_header">Aspect</string>
+    <string name="notifications_header">Notificări</string>
+    <string name="no_link_selected_text">"Niciun link selectat "</string>
+    <string name="add_link_dialog_title">Adaugare link</string>
+    <string name="add_link_dialog_cancel">Anulare</string>
+    <string name="add_link_dialog_input_hint">Introdu link</string>
 </resources>

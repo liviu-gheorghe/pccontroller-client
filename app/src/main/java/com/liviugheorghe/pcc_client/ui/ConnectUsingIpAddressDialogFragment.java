@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 

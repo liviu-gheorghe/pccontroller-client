@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/link_sharing_linear_layout"
     android:background="?android:attr/colorBackground"
-    tools:showIn="@layout/activity_link_sharing">
+    android:gravity="center"
+    android:orientation="vertical">
+
 
     <LinearLayout
+        android:id="@+id/no_link_selected_linear_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/link_sharing_button"
-            android:layout_width="match_parent"
+        <ImageView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:text="@string/connect_to_a_device_button_text"
-            android:textColor="?attr/primaryButtonTextColor" />
+            android:src="@drawable/ic_link_50dp" />
 
         <TextView
-            android:text="@string/device_not_connected_text"
-            android:id="@+id/link_sharing_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="0sp"
-            android:layout_marginTop="20sp"
-            android:layout_marginRight="0sp"
-            android:layout_marginBottom="20sp"
             android:gravity="center"
-            android:textColor="?android:attr/textColorPrimary" />
-
+            android:text="@string/no_link_selected_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginStart="@dimen/links_recycler_margin_start"
+        android:layout_marginEnd="@dimen/links_recycler_margin_start"
+        android:id="@+id/links_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>

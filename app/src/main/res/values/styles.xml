@@ -20,6 +20,8 @@
         <item name="android:textColorPrimaryInverse">@color/colorDark</item>
         <item name="primaryButtonTextColor">@color/colorWhite</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeBackground">@color/colorPrimary</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark" />

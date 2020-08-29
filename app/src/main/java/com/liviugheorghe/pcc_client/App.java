@@ -35,6 +35,8 @@ public class App extends Application {
     public static String CONNECTED_DEVICE_IP_ADDRESS = null;
     private static WeakReference<Context> context;
     private static TouchpadParams touchpadParams;
+    private static int NOTIFICATION_VIBRATION_OFF = 0;
+    private static int NOTIFICATION_VIBRATION_ON = 1;
 
     public static Context getAppContext() {
         return context.get();
@@ -79,12 +81,14 @@ public class App extends Application {
     
     private void createNotificationChannel(String channelID, String description, int... args) {
         int importance = (args.length > 0) ? args[0] : NotificationManagerCompat.IMPORTANCE_LOW;
+        boolean vibrate = (args.length > 1) && (args[1] == NOTIFICATION_VIBRATION_ON);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(
                     channelID,
                     description,
                     importance
             );
+            notificationChannel.enableVibration(vibrate);
             NotificationManager manager = getSystemService(NotificationManager.class);
             if(manager != null)
             manager.createNotificationChannel(notificationChannel);

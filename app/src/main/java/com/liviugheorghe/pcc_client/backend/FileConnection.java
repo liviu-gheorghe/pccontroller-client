@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.IBinder;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -65,7 +66,6 @@ public class FileConnection extends Service {
 						notificationBuilder.setContentTitle("Uploading file")
 								.setContentText("Upload in progress")
 								.setSmallIcon(R.drawable.ic_file_upload_black_24dp)
-								.setOnlyAlertOnce(true)
 								.setProgress(100, 0, false);
 
 						startForeground(NOTIFICATION_ID, notificationBuilder.build());
@@ -92,8 +92,9 @@ public class FileConnection extends Service {
 								totalNumberOfBytes += numberOfBytes;
 								if (fileSize != 0) {
 									int progress = (int) (((float) totalNumberOfBytes / fileSize) * 100);
+									Log.d(TAG, String.format("Progress is %d",progress));
 									notificationBuilder.setProgress(100, progress, false)
-											.setContentText(String.format(Locale.getDefault(), "Upload in progress , %d %% loaded", progress));
+											.setContentText(String.format(Locale.getDefault(), "Upload in progress , %d%% loaded", progress));
 									notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
 								}
 								fileSocketOutputStream.write(buffer, 0, numberOfBytes);
