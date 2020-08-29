@@ -8,8 +8,8 @@
     <string name="volume_bar">Volum</string>
     <string name="brightness_bar">Luminozitate</string>
     <string name="ts_activity_title">Conectare la dispozitiv</string>
-    <string name="ts_activity_scan">Cauta dispozitive</string>
-    <string name="url_cmd_activity_title">Partajeaza link-ul</string>
+    <string name="ts_activity_scan">Caută dispozitive</string>
+    <string name="url_cmd_activity_title">Partajează link-ul</string>
     <string name="ec_button_text">Conectare</string>
     <string name="service_notification_title">PC Controller este activ</string>
     <string name="touchpad_usage_info">
@@ -19,14 +19,14 @@
         <li>Apasa de doua ori pentru dublu click</li>\n
         <li>Foloseste doua degete pentru a derula in sus/jos</li>
     </string>
-    <string name="wait_for_permission_info">Accepta conexiunea de pe PC-ul tau</string>
+    <string name="wait_for_permission_info">Accepta conexiunea de pe PC-ul tău</string>
     <string name="todo">TODO</string>
     <string name="computer_ip_text_input_placeholder">Adresa IP</string>
     <string name="scan_qr_code_info">Scaneaza codul QR din aplicatie</string>
     <string name="close_connection_button_text">Inchide conexiunea</string>
-    <string name="file_sharing_activity_title">Paratajeaza fisierul</string>
-    <string name="invalid_ip_address_toast_text">Adresa IP este invalida</string>
-    <string name="connection_already_established_toast_text">O conexiune este deja stabilita</string>
+    <string name="file_sharing_activity_title">Paratajează fisierul</string>
+    <string name="invalid_ip_address_toast_text">Adresa IP este invalidă</string>
+    <string name="connection_already_established_toast_text">O conexiune este deja stabilită</string>
     <string name="device_not_reachable_toast_text">Dispozitivul nu poate fi detectat</string>
     <string name="connection_service_notification_text">Conectat la</string>
     <string name="client_service_notification_text">PC Controller este activ</string>
@@ -34,9 +34,9 @@
     <string name="connect_to_a_device_button_text">Conectare la un dispozitiv</string>
     <string name="send_file_button_text">Trimitere fisier</string>
     <string name="send_link_button_text">Trimitere link</string>
-    <string name="invalid_file_toast_text">Fisier invalid</string>
+    <string name="invalid_file_toast_text">Fișier invalid</string>
     <string name="invalid_link_toast_text">Link Invalid</string>
-    <string name="no_file_selected_text">Niciun fisier selectat</string>
+    <string name="no_file_selected_text">Niciun fișier selectat</string>
     <string name="selected_file_name_text">Nume</string>
     <string name="selected_file_type_text">Tip</string>
     <string name="selected_file_size_text">Dimensiune</string>
@@ -45,14 +45,14 @@
     <string name="activity_main_menu_action_recently_connected_devices">Dispozitive</string>
     <string name="activity_main_menu_action_help">Ajutor</string>
     <string name="activity_main_control_interface_menu_action_disconnect">Deconectare</string>
-    <string name="activity_touchpad_action_keyboard">Tastatura</string>
+    <string name="activity_touchpad_action_keyboard">Tastatură</string>
     <string name="activity_touchpad_action_keyboard_voice">Vorbire</string>
     <string name="open_drawer_content_description">Deschidere</string>
-    <string name="close_drawer_content_description">Inchidere</string>
+    <string name="close_drawer_content_description">Închidere</string>
     <string name="drawer_action_remote_control">Control remote</string>
-    <string name="drawer_action_file_sharing">Partajare fisier</string>
+    <string name="drawer_action_file_sharing">Partajare fișier</string>
     <string name="drawer_action_link_sharing">Partajare link</string>
-    <string name="drawer_action_settings">Setari</string>
+    <string name="drawer_action_settings">Setări</string>
     <string name="drawer_action_help_and_feedback">Ajutor si feedback</string>
     <string name="drawer_action_about">Despre</string>
     <string name="drawer_section_title_more">Mai multe</string>
@@ -61,4 +61,11 @@
     <string name="connect_using_ip_dialog_title">Conectare cu IP</string>
     <string name="connect_using_ip_dialog_ok">OK</string>
     <string name="connect_using_ip_dialog_cancel">Anulare</string>
+    <string name="title_activity_settings">Setări</string>
+    <string name="appearance_header">Aspect</string>
+    <string name="notifications_header">Notificări</string>
+    <string name="no_link_selected_text">"Niciun link selectat "</string>
+    <string name="add_link_dialog_title">Adaugare link</string>
+    <string name="add_link_dialog_cancel">Anulare</string>
+    <string name="add_link_dialog_input_hint">Introdu link</string>
 </resources>

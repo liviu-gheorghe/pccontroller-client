@@ -45,7 +45,7 @@
         android:background="@color/colorAccent"
         android:backgroundTint="@color/colorAccent"
         app:borderWidth="0dp"
-        app:srcCompat="@drawable/ic_icon_send" />
+        app:srcCompat="@drawable/ic_send" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

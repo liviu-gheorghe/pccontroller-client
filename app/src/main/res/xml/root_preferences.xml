@@ -1,0 +1,37 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/appearance_header">
+        <ListPreference
+            android:icon="@drawable/ic_settings_theme"
+            app:defaultValue="MODE_NIGHT_YES"
+            app:entries="@array/ui_mode_entries"
+            app:entryValues="@array/ui_mode_values"
+            app:key="ui_mode"
+            app:title="Theme"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/notifications_header">
+        <SwitchPreferenceCompat
+            android:key="receive_ping_notifications"
+            android:icon="@drawable/ic_settings_notifications"
+            android:title="Allow ping notifications"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/touchpad_header">
+        <ListPreference
+            android:defaultValue="200"
+            android:icon="@drawable/ic_touchpad"
+            app:entries="@array/touchpad_sensitivity_entries"
+            app:entryValues="@array/touchpad_sensitivity_values"
+            app:key="touchpad_sensitivity"
+            app:title="Touchpad sensitivity"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
