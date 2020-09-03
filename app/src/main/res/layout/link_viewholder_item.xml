@@ -6,5 +6,5 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/link_item_vertical_padding"
     android:layout_marginVertical="@dimen/link_item_vertical_margin"
-    android:background="@drawable/link_viewholder_background">
+    android:background="@drawable/link_viewholder_bg">
 </TextView>

@@ -10,6 +10,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,20 +23,17 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.liviugheorghe.pcc_client.App;
 import com.liviugheorghe.pcc_client.R;
 import com.liviugheorghe.pcc_client.backend.Client;
 import com.liviugheorghe.pcc_client.backend.DispatchedActionsCodes;
-
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,6 +41,7 @@ import java.util.regex.Pattern;
 public class LinkSharingActivity extends AppCompatActivity {
 
 
+    private static final String TAG = LinkSharingActivity.class.getSimpleName();
     private Client client;
     private boolean isLinkAdded = true;
     private LinearLayout noLinkSelectedLinearLayout;
@@ -58,8 +57,9 @@ public class LinkSharingActivity extends AppCompatActivity {
             }
         }
     };
+
     private ServiceConnection serviceConnection;
-    private View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
+/*    private View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
             if(actionMode != null) return false;
@@ -67,7 +67,7 @@ public class LinkSharingActivity extends AppCompatActivity {
             v.setSelected(true);
             return true;
         }
-    };
+    };*/
     private RecyclerView linksContainerRecycler;
     private RecyclerAdapter recyclerAdapter;
 
@@ -87,6 +87,36 @@ public class LinkSharingActivity extends AppCompatActivity {
         linksContainerRecycler.setLayoutManager(new LinearLayoutManager(this));
         recyclerAdapter = new RecyclerAdapter(this);
         linksContainerRecycler.setAdapter(recyclerAdapter);
+
+
+
+        recyclerAdapter.addLink("https://github.com");
+        recyclerAdapter.addLink("https://gitlab.com");
+        recyclerAdapter.addLink("https://facebook.com");
+        recyclerAdapter.addLink("https://yahoo.com");
+        recyclerAdapter.addLink("https://google.com");
+        recyclerAdapter.addLink("https://nasa.gov");
+        recyclerAdapter.addLink("https://github.com");
+        recyclerAdapter.addLink("https://github.com");
+        recyclerAdapter.addLink("https://github.com");
+        recyclerAdapter.addLink("https://github.com");
+        recyclerAdapter.addLink("https://github.com");
+        recyclerAdapter.addLink("https://github.com");
+        recyclerAdapter.addLink("https://github.com");
+        recyclerAdapter.addLink("https://github.com");
+        recyclerAdapter.addLink("https://github.com");
+        recyclerAdapter.addLink("https://github.com");
+        recyclerAdapter.addLink("https://github.com");
+        recyclerAdapter.addLink("https://github.com");
+        recyclerAdapter.addLink("https://github.com");
+        recyclerAdapter.addLink("https://github.com");
+        recyclerAdapter.addLink("https://github.com");
+        recyclerAdapter.addLink("https://github.com");
+        recyclerAdapter.addLink("https://github.com");
+        recyclerAdapter.addLink("https://github.com");
+        recyclerAdapter.addLink("https://github.com");
+
+
         setToolbar();
         LocalBroadcastManager.getInstance(this).registerReceiver(serviceBroadcastReceiver, new IntentFilter(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
         sendLinksFloatingActionButton = findViewById(R.id.send_links_fab);
@@ -98,6 +128,7 @@ public class LinkSharingActivity extends AppCompatActivity {
 
         bindClientService();
         sendLinksFloatingActionButton.setOnClickListener(view -> sendLinks());
+        updateConnectionInfo();
     }
 
     private boolean checkIfStringIsValidUrl(String s) {
@@ -146,6 +177,9 @@ public class LinkSharingActivity extends AppCompatActivity {
 
         @Override
         public void onDestroyActionMode(ActionMode mode) {
+
+
+            Log.d(TAG, "onDestroyActionMode: Number of selected links ----> " + recyclerAdapter.getSelectedLinksCount());
             actionMode = null;
         }
     };
@@ -194,10 +228,12 @@ public class LinkSharingActivity extends AppCompatActivity {
             if(isLinkAdded) {
                 sendLinksFloatingActionButton.setVisibility(View.VISIBLE);
                 noLinkSelectedLinearLayout.setVisibility(View.INVISIBLE);
+                noLinkSelectedLinearLayout.setScaleY(0);
             }
             else {
                 sendLinksFloatingActionButton.setVisibility(View.INVISIBLE);
                 noLinkSelectedLinearLayout.setVisibility(View.VISIBLE);
+                noLinkSelectedLinearLayout.setScaleY(1);
             }
         }
         else {
@@ -220,7 +256,6 @@ public class LinkSharingActivity extends AppCompatActivity {
                     addViewToLayout(enteredString.trim());
                 })
                 .setNegativeButton(R.string.add_link_dialog_cancel,(dialog, which) -> {
-
                 });
 
         AlertDialog dialog = builder.create();
@@ -253,18 +288,25 @@ public class LinkSharingActivity extends AppCompatActivity {
             unbindService(serviceConnection);
     }
 
-    private class RecyclerAdapter extends RecyclerView.Adapter {
+    class RecyclerAdapter extends RecyclerView.Adapter {
 
 
         private LayoutInflater layoutInflater;
         private Context context;
         private ArrayList<String> links = new ArrayList<>();
-        private ArrayList<Integer> selectedLinksPositions;
+        private SparseBooleanArray selectedLinks;
 
         public RecyclerAdapter(Context context) {
             this.context = context;
             layoutInflater = LayoutInflater.from(this.context);
+            selectedLinks = new SparseBooleanArray();
         }
+
+
+        public int getSelectedLinksCount() {
+            return selectedLinks.size();
+        }
+
 
         public ArrayList<String> getLinks() {
             return links;
@@ -280,13 +322,44 @@ public class LinkSharingActivity extends AppCompatActivity {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View viewItem = layoutInflater.inflate(R.layout.link_viewholder_item,parent,false);
-            return new LinkViewHolder(viewItem);
+
+            viewItem.setOnLongClickListener(
+                    v -> {
+                        if(actionMode != null) return true;
+                        actionMode = LinkSharingActivity.this.startActionMode(actionModeCallback);
+//                        v.setActivated(true);
+                        return true;
+                    }
+            );
+            return new RecyclerAdapter.LinkViewHolder(viewItem);
         }
+
+
+        private void onViewHolderItemClicked(View v,int position) {
+            if(actionMode == null) {
+                // TODO
+            }
+            else {
+                if(!selectedLinks.get(position, false)) {
+                    v.setActivated(true);
+                    selectedLinks.put(position,true);
+                }
+                else {
+                    v.setActivated(false);
+                    selectedLinks.delete(position);
+                }
+            }
+        }
+
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            LinkViewHolder linkViewHolder = (LinkViewHolder) holder;
+
+            RecyclerAdapter.LinkViewHolder linkViewHolder = (RecyclerAdapter.LinkViewHolder) holder;
             linkViewHolder.getLinkView().setText(links.get(position));
+            linkViewHolder.getLinkView().setActivated(selectedLinks.get(position,false));
+            onViewHolderItemClicked(linkViewHolder.getLinkView(),position);
+
         }
 
         @Override
@@ -305,7 +378,12 @@ public class LinkSharingActivity extends AppCompatActivity {
             public LinkViewHolder(@NonNull View itemView) {
                 super(itemView);
                 linkView = itemView.findViewById(R.id.link_viewholder_item);
-                linkView.setOnLongClickListener(longClickListener);
+/*                linkView.setOnLongClickListener(v -> {
+                    if(actionMode != null) return false;
+                    actionMode = LinkSharingActivity.this.startActionMode(actionModeCallback);
+                    v.setSelected(true);
+                    return true;
+                });*/
             }
         }
     }
