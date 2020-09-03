@@ -6,13 +6,13 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.core.app.NotificationCompat;
+
 import com.liviugheorghe.pcc_client.App;
+import com.liviugheorghe.pcc_client.R;
 import com.liviugheorghe.pcc_client.backend.Action;
 import com.liviugheorghe.pcc_client.backend.ReceivedActionsCodes;
-import com.liviugheorghe.pcc_client.ui.LauncherActivity;
-import com.pccontroller.R;
-
-import androidx.core.app.NotificationCompat;
+import com.liviugheorghe.pcc_client.ui.MainActivity;
 
 public class ActionReceivePing implements Action {
 	
@@ -29,7 +29,7 @@ public class ActionReceivePing implements Action {
 
     private void createPingNotification() {
         Intent notificationIntent = new Intent(
-                App.getAppContext(), LauncherActivity.class
+                App.getAppContext(), MainActivity.class
         );
 		PendingIntent pendingIntent = PendingIntent.getActivity(
 				App.getAppContext(), 0, notificationIntent, 0
@@ -37,7 +37,7 @@ public class ActionReceivePing implements Action {
 		Notification notification = new NotificationCompat.Builder(App.getAppContext(), App.BACKGROUND_SERVICE_CHANNEL_ID)
 				.setContentTitle("")
 				.setContentText("Ping!")
-				.setSmallIcon(R.drawable.ic_android_black_24dp)
+				.setSmallIcon(R.drawable.ic_notification)
 				.setContentIntent(pendingIntent)
 				.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL;

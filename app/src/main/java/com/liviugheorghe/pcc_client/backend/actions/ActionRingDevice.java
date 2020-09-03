@@ -7,11 +7,9 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 
 import com.liviugheorghe.pcc_client.App;
+import com.liviugheorghe.pcc_client.R;
 import com.liviugheorghe.pcc_client.backend.Action;
-import com.liviugheorghe.pcc_client.backend.Client;
 import com.liviugheorghe.pcc_client.backend.ReceivedActionsCodes;
-import com.liviugheorghe.pcc_client.ui.LauncherActivity;
-import com.pccontroller.R;
 
 public class ActionRingDevice implements Action {
 

@@ -4,33 +4,30 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.IBinder;
-import android.provider.OpenableColumns;
-import android.webkit.MimeTypeMap;
-
-import com.liviugheorghe.pcc_client.App;
-import com.pccontroller.R;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileNotFoundException;
-import java.net.Socket;
-import java.util.Locale;
-import java.util.UUID;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
-import static com.liviugheorghe.pcc_client.App.EXTRA_FILE_URI;
+import com.liviugheorghe.pcc_client.App;
+import com.liviugheorghe.pcc_client.R;
+import com.liviugheorghe.pcc_client.util.FileInformation;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.Socket;
+import java.util.Locale;
+import java.util.UUID;
+
+import static android.content.Intent.EXTRA_STREAM;
 
 public class FileConnection extends Service {
 	
 	
 	private final String TAG = this.getClass().getSimpleName();
 	private final int BUFFER_SIZE = 1024 * 40;
-	MimeTypeMap mime = MimeTypeMap.getSingleton();
 	private Socket fileSocket;
 	private DataOutputStream fileSocketOutputStream;
 	private FileInformation fileInformation;
@@ -63,27 +60,27 @@ public class FileConnection extends Service {
 				() -> {
 					try {
 						byte[] buffer = new byte[BUFFER_SIZE];
-						
+
 						notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 						notificationBuilder = new NotificationCompat.Builder(FileConnection.this, App.FILE_SHARING_SERVICE_CHANNEL_ID);
 						notificationBuilder.setContentTitle("Uploading file")
 								.setContentText("Upload in progress")
 								.setSmallIcon(R.drawable.ic_file_upload_black_24dp)
 								.setProgress(100, 0, false);
-						
+
 						startForeground(NOTIFICATION_ID, notificationBuilder.build());
-						DataInputStream dataInputStream = new DataInputStream(fileInformation.inputStream);
+						DataInputStream dataInputStream = new DataInputStream(getContentResolver().openInputStream(fileInformation.getUri()));
 						int fileSize = 0;
-						String fileName = fileInformation.name;
+						String fileName = fileInformation.getName();
 						try {
-							fileSize = Integer.parseInt(fileInformation.size);
+							fileSize = Integer.parseInt(fileInformation.getSize());
 						} catch (NumberFormatException e) {
 							e.printStackTrace();
 							notificationBuilder.setProgress(100, 0, true);
 						}
-						
+
 						if (fileName == null)
-							fileName = UUID.randomUUID().toString() + "." + fileInformation.type;
+							fileName = UUID.randomUUID().toString() + "." + fileInformation.getType();
 						int filenameSize = fileName.length();
 						fileSocketOutputStream.writeInt(filenameSize);
 						fileSocketOutputStream.writeBytes(fileName);
@@ -95,8 +92,9 @@ public class FileConnection extends Service {
 								totalNumberOfBytes += numberOfBytes;
 								if (fileSize != 0) {
 									int progress = (int) (((float) totalNumberOfBytes / fileSize) * 100);
+									Log.d(TAG, String.format("Progress is %d",progress));
 									notificationBuilder.setProgress(100, progress, false)
-											.setContentText(String.format(Locale.getDefault(), "Upload in progress , %d %% loaded", progress));
+											.setContentText(String.format(Locale.getDefault(), "Upload in progress , %d%% loaded", progress));
 									notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
 								}
 								fileSocketOutputStream.write(buffer, 0, numberOfBytes);
@@ -122,8 +120,12 @@ public class FileConnection extends Service {
 		}
 		
 		try {
-			Uri uri = Uri.parse(intent.getStringExtra(EXTRA_FILE_URI));
-			fileInformation = getFileInformation(uri);
+			fileInformation = new FileInformation(
+					Uri.parse(intent.getStringExtra(EXTRA_STREAM)),
+					intent.getStringExtra(App.EXTRA_FILE_NAME),
+					intent.getStringExtra(App.EXTRA_FILE_SIZE),
+					intent.getStringExtra(App.EXTRA_FILE_TYPE)
+			);
 			onConnectionEstablished();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -147,32 +149,5 @@ public class FileConnection extends Service {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-	private FileInformation getFileInformation(Uri uri) {
-		FileInformation fileInformation = new FileInformation();
-		Cursor cursor = getContentResolver().query(uri, null, null, null, null, null);
-		try {
-			if (cursor != null && cursor.moveToFirst()) {
-				fileInformation.name = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-				int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
-				String size;
-				if (!cursor.isNull(sizeIndex))
-					size = cursor.getString(sizeIndex);
-				else
-					size = "Unknown";
-				
-				fileInformation.size = size;
-				fileInformation.inputStream = getContentResolver().openInputStream(uri);
-			}
-			String mimeType = getContentResolver().getType(uri);
-			if (mimeType != null)
-				fileInformation.type = mime.getExtensionFromMimeType(mimeType);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			cursor.close();
-		}
-		return fileInformation;
 	}
 }

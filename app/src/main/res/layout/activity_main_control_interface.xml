@@ -1,258 +1,269 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorDark"
+    android:fitsSystemWindows="true"
     tools:context="com.liviugheorghe.pcc_client.ui.MainControlInterfaceActivity">
 
-    <ScrollView
-        android:id="@id/scrollView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/close_connection_button">
+        android:layout_height="match_parent"
+        android:background="?android:attr/colorBackground"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TableLayout
-            android:id="@+id/tableLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#000000"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/hostname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="#FFFFFF" />
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
-
-                <ImageButton
-                    android:id="@+id/br_down"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#000000"
-                    android:contentDescription="@string/todo"
-                    android:onClick="clickActionView"
-                    app:srcCompat="@drawable/ic_indeterminate_check_box_black_24dp" />
-
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:background="@color/colorDark"
-                    android:gravity="center"
-                    android:paddingLeft="5sp"
-                    android:paddingRight="5sp"
-                    android:text="@string/brightness_bar"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="24sp" />
-
-                <ImageButton
-                    android:id="@+id/br_up"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#000000"
-                    android:contentDescription="@string/todo"
-                    android:onClick="clickActionView"
-                    app:srcCompat="@drawable/ic_add_box_black_24dp" />
-
-
-
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/buttons_row_1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
-
-                <ImageButton
-                    android:id="@+id/vol_down"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/colorDark"
-                    android:contentDescription="TODO"
-                    android:onClick="clickActionView"
-                    app:srcCompat="@drawable/ic_indeterminate_check_box_black_24dp" />
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:background="@color/colorDark"
-                    android:gravity="center"
-                    android:paddingLeft="5sp"
-                    android:paddingRight="5sp"
-                    android:text="@string/volume_bar"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="24sp" />
-
-                <ImageButton
-                    android:id="@+id/vol_up"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="#000000"
-                    android:contentDescription="@string/todo"
-                    android:onClick="clickActionView"
-                    app:srcCompat="@drawable/ic_add_box_black_24dp" />
-
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
-
-                <ImageButton
-                    android:id="@+id/home_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#000000"
-                    android:onClick="clickActionView"
-                    app:srcCompat="@drawable/ic_home_black_24dp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
-
-                <ImageButton
-                    android:id="@+id/key_up"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#000000"
-                    android:onClick="clickActionView"
-                    app:srcCompat="@drawable/ic_arrow_upward_black_24dp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
-
-                <ImageButton
-                    android:id="@+id/key_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#000000"
-                    android:contentDescription="TODO"
-                    android:onClick="clickActionView"
-                    app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
-
-                <ImageButton
-                    android:id="@+id/key_enter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#000000"
-                    android:onClick="clickActionView"
-                    app:srcCompat="@drawable/ic_center_focus_strong_black_24dp" />
-
-                <ImageButton
-                    android:id="@+id/key_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#000000"
-                    android:contentDescription="TODO"
-                    android:onClick="clickActionView"
-                    app:srcCompat="@drawable/ic_arrow_forward_black_24dp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal">
-
-                <ImageButton
-                    android:id="@+id/key_down"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#000000"
-                    android:contentDescription="TODO"
-                    android:onClick="clickActionView"
-                    app:srcCompat="@drawable/ic_arrow_downward_black_24dp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
-
-                <ImageButton
-                    android:id="@+id/switch_tabs"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#000000"
-                    android:contentDescription="TODO"
-                    android:onClick="clickActionView"
-                    app:srcCompat="@drawable/ic_autorenew_black_24dp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal">
-
-                <ImageButton
-                    android:id="@+id/open_touchpad"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#000000"
-                    android:contentDescription="TODO"
-                    android:onClick="clickOpenTouchPad"
-                    app:srcCompat="@drawable/ic_touch_app_black_24dp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15sp"
-                android:gravity="center_horizontal">
-
-                <ImageButton
-                    android:id="@+id/upload_file"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#000000"
-                    android:contentDescription="TODO"
-                    android:onClick="clickOpenFile"
-                    app:srcCompat="@drawable/ic_file_upload_orange_50dp" />
-            </TableRow>
-        </TableLayout>
-    </ScrollView>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/close_connection_button"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-        <Button
-            android:id="@+id/button"
+        <ScrollView
+            android:id="@id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#DF4A16"
-            android:onClick="clickCloseConnectionButton"
-            android:text="@string/close_connection_button_text" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:fillViewport="true"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TableLayout
+                android:id="@+id/tableLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTransparent">
+
+                <TextView
+                    android:id="@+id/hostname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="?android:attr/textColorPrimary" />
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <ImageButton
+                        android:id="@+id/br_down"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorTransparent"
+                        android:contentDescription="@string/todo"
+                        android:onClick="clickActionView"
+                        app:srcCompat="@drawable/ic_box_minus" />
+
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:background="@color/colorTransparent"
+                        android:gravity="center"
+                        android:paddingLeft="5sp"
+                        android:paddingRight="5sp"
+                        android:text="@string/brightness_bar"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textSize="24sp" />
+
+                    <ImageButton
+                        android:id="@+id/br_up"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorTransparent"
+                        android:contentDescription="@string/todo"
+                        android:onClick="clickActionView"
+                        app:srcCompat="@drawable/ic_box_plus" />
+
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/buttons_row_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <ImageButton
+                        android:id="@+id/vol_down"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/colorTransparent"
+                        android:contentDescription="TODO"
+                        android:onClick="clickActionView"
+                        app:srcCompat="@drawable/ic_box_minus" />
+
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:background="@color/colorTransparent"
+                        android:gravity="center"
+                        android:paddingLeft="5sp"
+                        android:paddingRight="5sp"
+                        android:text="@string/volume_bar"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textSize="24sp" />
+
+                    <ImageButton
+                        android:id="@+id/vol_up"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/colorTransparent"
+                        android:contentDescription="@string/todo"
+                        android:onClick="clickActionView"
+                        app:srcCompat="@drawable/ic_box_plus" />
+
+
+                </TableRow>
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal">
+
+                    <ImageButton
+                        android:id="@+id/home_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorTransparent"
+                        android:onClick="clickActionView"
+                        app:srcCompat="@drawable/ic_home" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal">
+
+                    <ImageButton
+                        android:id="@+id/key_up"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorTransparent"
+                        android:onClick="clickActionView"
+                        app:srcCompat="@drawable/ic_arrow_upward" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal">
+
+                    <ImageButton
+                        android:id="@+id/key_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorTransparent"
+                        android:contentDescription="TODO"
+                        android:onClick="clickActionView"
+                        app:srcCompat="@drawable/ic_arrow_backward" />
+
+                    <ImageButton
+                        android:id="@+id/key_enter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorTransparent"
+                        android:onClick="clickActionView"
+                        app:srcCompat="@drawable/ic_enter" />
+
+                    <ImageButton
+                        android:id="@+id/key_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorTransparent"
+                        android:contentDescription="TODO"
+                        android:onClick="clickActionView"
+                        app:srcCompat="@drawable/ic_arrow_forward" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal">
+
+                    <ImageButton
+                        android:id="@+id/key_down"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorTransparent"
+                        android:contentDescription="TODO"
+                        android:onClick="clickActionView"
+                        app:srcCompat="@drawable/ic_arrow_downward" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal">
+
+                    <ImageButton
+                        android:id="@+id/switch_tabs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorTransparent"
+                        android:contentDescription="TODO"
+                        android:onClick="clickActionView"
+                        app:srcCompat="@drawable/ic_switch" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal">
+
+                    <ImageButton
+                        android:id="@+id/open_touchpad"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorTransparent"
+                        android:contentDescription="TODO"
+                        android:onClick="clickOpenTouchPad"
+                        app:srcCompat="@drawable/ic_touch" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal">
+
+                    <ImageButton
+                        android:id="@+id/upload_file"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorTransparent"
+                        android:contentDescription="TODO"
+                        android:onClick="clickOpenFile"
+                        app:srcCompat="@drawable/ic_file_upload_orange_50dp" />
+                </TableRow>
+
+            </TableLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

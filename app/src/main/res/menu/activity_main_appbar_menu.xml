@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.liviugheorghe.pcc_client.ui.MainActivity">
+
+    <item
+        android:id="@+id/action_connect_using_ip"
+        android:onClick="connectUsingIpMenuItemClick"
+        android:title="@string/action_connect_using_ip"
+        app:showAsAction="never"/>
+
+    <item
+        android:onClick="closeAppMenuItemClick"
+        android:title="@string/action_close_app"
+        app:showAsAction="never" />
+
+</menu>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    android:id="@+id/link_viewholder_item"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/link_item_vertical_padding"
+    android:layout_marginVertical="@dimen/link_item_vertical_margin"
+    android:background="@drawable/link_viewholder_background">
+</TextView>

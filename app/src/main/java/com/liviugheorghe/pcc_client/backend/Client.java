@@ -15,8 +15,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.ServiceCompat;
 
 import com.liviugheorghe.pcc_client.App;
-import com.liviugheorghe.pcc_client.ui.LauncherActivity;
-import com.pccontroller.R;
+import com.liviugheorghe.pcc_client.R;
+import com.liviugheorghe.pcc_client.ui.MainControlInterfaceActivity;
 
 public class Client extends Service {
 
@@ -79,6 +79,8 @@ public class Client extends Service {
 	}
 
 	public void closeConnection() {
+/*		LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(App.BROADCAST_LEAVE_MAIN_CONTROL_INTERFACE_ACTIVITY));
+		LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(App.BROADCAST_LEAVE_WAIT_FOR_PERMISSION_ACTIVITY));*/
 		try {
 			connection.stopSelf();
 		} catch (Exception e) {
@@ -93,11 +95,11 @@ public class Client extends Service {
 	}
 
 	private Notification createServiceNotification(String text, String channelID) {
-		Intent i = new Intent(this, LauncherActivity.class);
-		PendingIntent pendingIntent = PendingIntent.getService(this, 0, i, 0);
+		Intent i = new Intent(this, MainControlInterfaceActivity.class);
+		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, 0);
 		return new NotificationCompat.Builder(this, channelID)
 				.setContentText(text)
-				.setSmallIcon(R.drawable.ic_android_black_24dp)
+				.setSmallIcon(R.drawable.ic_notification)
 				.setContentIntent(pendingIntent)
 				.build();
 	}
