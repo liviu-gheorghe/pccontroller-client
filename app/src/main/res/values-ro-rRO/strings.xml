@@ -68,4 +68,8 @@
     <string name="add_link_dialog_title">Adaugare link</string>
     <string name="add_link_dialog_cancel">Anulare</string>
     <string name="add_link_dialog_input_hint">Introdu link</string>
+    <string name="action_add_new_link">Adaugă link</string>
+    <string name="link_sharing_action_mode_title">selectat</string>
+    <string name="link_sharing_action_mode_title_plural">selectate</string>
+    <string name="edit_link_dialog_title">Editare link</string>
 </resources>

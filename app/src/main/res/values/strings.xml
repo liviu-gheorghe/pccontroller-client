@@ -70,4 +70,7 @@
     <string name="add_link_dialog_cancel">Cancel</string>
     <string name="add_link_dialog_input_hint">Enter Link</string>
     <string name="action_add_new_link">Add link</string>
+    <string name="link_sharing_action_mode_title">selected</string>
+    <string name="link_sharing_action_mode_title_plural">selected</string>
+    <string name="edit_link_dialog_title">Edit link</string>
 </resources>
