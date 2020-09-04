@@ -23,6 +23,7 @@ public class MainActivityConnectedFragment extends Fragment {
     private Drawable linuxDrawable;
     private Drawable windowsDrawable;
     private Drawable macDrawable;
+    private Drawable genericDrawable;
     private ImageView osImageView;
     private TextView targetHostnameTextView;
     private String hostname;
@@ -35,18 +36,27 @@ public class MainActivityConnectedFragment extends Fragment {
         windowsDrawable = ContextCompat.getDrawable(getActivity(),R.drawable.ic_windows);
         macDrawable = ContextCompat.getDrawable(getActivity(),R.drawable.ic_mac);
         linuxDrawable = ContextCompat.getDrawable(getActivity(),R.drawable.ic_linux);
+        genericDrawable = ContextCompat.getDrawable(getActivity(),R.drawable.ic_laptop_100dp);
     }
 
     private void setRequiredDrawable() {
+        if(osType == null) {
+            osImageView.setImageDrawable(genericDrawable);
+            return;
+        }
         Log.d("MainActivity", "osType is "+osType);
-        if(osType.equals("linux")) {
-            osImageView.setImageDrawable(linuxDrawable);
-        }
-        else if(osType.equals("windows")) {
-            osImageView.setImageDrawable(windowsDrawable);
-        }
-        else if(osType.equals("mac")) {
-            osImageView.setImageDrawable(macDrawable);
+        switch (osType) {
+            case "linux":
+                osImageView.setImageDrawable(linuxDrawable);
+                break;
+            case "windows":
+                osImageView.setImageDrawable(windowsDrawable);
+                break;
+            case "mac":
+                osImageView.setImageDrawable(macDrawable);
+                break;
+            default:
+                osImageView.setImageDrawable(genericDrawable);
         }
     }
 
